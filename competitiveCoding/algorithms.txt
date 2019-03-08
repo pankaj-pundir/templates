@@ -1,0 +1,512 @@
+// C++ initail code
+
+#include<bits/stdc++.h>
+#define REP(i,b) for (int i = 0; i < b; i++)
+#define mt make_tuple
+#define eb emplace_back
+#define c(a) cout<<"\ncondition :"<<a<<"\n";
+#define el "\n"
+#define F first
+#define S second
+#define ALL(x) (x).begin(), (x).end()
+#define FOR(i,a,b,c) for (int i = a; i < b; i+=c)
+#define MAT(v,row,col) vector<vi> > v(row,vi (col,0));
+#define MOD 1000007
+using namespace std;
+
+typedef long long ll; 
+typedef pair<int, int> ii; 
+typedef vector<ii> vii;
+typedef vector<int> vi;
+
+void run(){
+    int r ,maxy =-8;
+    cin>>r;
+    vi v;
+    REP(i,r){
+      int temp;
+      cin>>temp;
+      v.eb(temp);
+      if (maxy < temp)
+      {
+        maxy = temp;
+      }
+    }
+}
+
+int main(int argc, char const *argv[])
+{	ios::sync_with_stdio(0);
+    cin.tie(0);
+    int t;
+	cin>>t;
+	while(t--){
+    run();
+  }
+	return 0;
+}
+
+-------------------------------------- print array ---------------------
+
+cout<<"\n output \n";
+for (auto a: var)
+{
+  cout<<a<<" ";
+}
+cout<<"\n";
+
+// set exact precision
+const auto prev_round = std::fegetround();
+std::fesetround(FE_DOWNWARD);
+cout<<setprecision(6)<<fixed<<val<<el;
+
+
+---------------------------power -------------------------
+
+int power(int x, unsigned int y, int p) 
+{ 
+    int res = 1;      // Initialize result 
+    x = x % p; 
+    while (y > 0) 
+    { 
+        // If y is odd, multiply x with result 
+        if (y & 1) 
+            res = (res*x) % p; 
+        y = y>>1; // y = y/2 
+        x = (x*x) % p;   
+    } 
+    return res; 
+} 
+
+------------ msb ---------
+
+int i = std::stoi("01000101", nullptr, 2);
+
+
+ll setBitNumber(ll n) 
+{ 
+  for (int i = 0; i < sizeof(n); ++i)
+  {
+    n| =n>> pow(2,i);
+  }
+    n = n + 1; 
+    return (n >> 1); 
+} 
+
+
+ll findMsb(ll n) 
+{ 
+  for (int i = 0; i < sizeof(n); ++i)
+  {
+    n |=n >> (int) pow(2,i);
+  }
+    n = n + 1; 
+    return log2(n >> 1)+1; 
+} 
+
+
+int completeXOR(int n) 
+{ 
+    if (n % 4 == 0) 
+        return n; 
+    if (n % 4 == 1) 
+        return 1; 
+    if (n % 4 == 2) 
+        return n + 1; 
+    else
+        return 0; 
+} 
+
+"Xor the numbers from 1 to n"
+long long Xory(long long x){
+    long long a = x % 8;
+    if(a == 0 || a == 1) return x;
+    if(a == 2 || a == 3) return 2;
+    if(a == 4 || a == 5) return x+2;
+    if(a == 6 || a == 7) return 0;
+    return 0;
+}
+--------------find solution of a equation ---------
+
+ll eq(int a){
+
+// this is the equation
+return a*(a-1)/2;
+
+}
+
+ll solveX(int x){
+// cout<<"x:"<<x<<" ";
+ll a=0,b= 10000,mid,eval;
+  while(a<b){
+
+    mid = (a+b)/2;
+    // cout<<"mid:"<<mid;
+    eval = eq(mid);
+    if( eval == x) return mid;
+
+    if(eval < x){ a = mid+1;
+// cout<<"eval : "<<eval<<"\n";
+}
+
+    if(eval > x){ b = mid-1;
+    }
+    // cout<<"a: "<<a<<" b:"<<b<<"\n";
+  }
+
+  return mid;
+ }
+
+ 
+-------------------------------------- links ----------------------------
+// BIt manipulation links
+https://www.cprogramming.com/tutorial/bitwise_operators.html
+// builtin functions
+https://www.hscripts.com/tutorials/cpp/cpp-predefined-functions.php
+// coding tricks
+http://codeforces.com/blog/entry/15643
+
+
+----------------------------map----------------------
+#include <set>
+
+int main(){
+
+    typedef pair<int, int> pairs; //creating pair as default data type 
+    pairs p[5]; //array of pair objects
+    for (int i =0; i<5; i++){
+        p[i].first= (i+1)*10; //inserting first element of pair
+        p[i].second = (i+1); //inserting first element of pair
+    }
+    set<pairs> s;   //set to sort pair
+    set<pairs> :: iterator it; //iterator to manipulate set
+
+    for (int i =0; i<5; i++){
+        s.insert(p[i]); //inserting pair object in set
+    }
+
+    for (it = s.begin(); it!=s.end(); it++){
+        pairs m = *it; // returns pair to m
+
+    cout<<m.first<<" "<<m.second<<endl; //showing pair elements
+    }
+    return 0;
+}
+
+
+
+-----------Number of ways to get 'T' from numbers with power 'power'----
+int ps(int currSum, int power ,int number, int lim, int t){
+    int sum =0;
+    currSum += pow(number,power);
+
+    if (t==currSum)
+        {  
+            return 1;
+        }
+    if (t < currSum)
+    {
+        return 0;
+    }
+    for (int i = number+1; i <= lim ; ++i)
+    {
+        sum += ps(currSum, power , i ,lim,t);
+    }
+    return sum;
+}
+
+---------------------------------------		// quick sort-------------------
+void swap(int* a, int* b)
+{
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+int partition (int arr[], int low, int high)
+{
+    int pivot = arr[high];    // pivot
+    int i = (low - 1);  // Index of smaller element
+ 
+    for (int j = low; j <= high- 1; j++)
+    {
+        // If current element is smaller than or
+        // equal to pivot
+        if (arr[j] <= pivot)
+        {
+            i++;    // increment index of smaller element
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
+
+void quickSort(int arr[], int low, int high)
+{
+    if (low < high)
+    {
+        /* pi is partitioning index, arr[p] is now
+           at right place */
+        int pi = partition(arr, low, high);
+ 
+        // Separately sort elements before
+        // partition and after partition
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+---------------------------------------------
+// C++ implementation to print the longest common substring
+#include <iostream>
+#include <string.h>
+#include <stdlib.h>
+ 
+using namespace std;
+ 
+/* function to find and print the longest common 
+   substring of X[0..m-1] and Y[0..n-1] */
+void printLCSubStr(char* X, char* Y, int m, int n)
+{
+    // Create a table to store lengths of longest common
+    // suffixes of substrings.   Note that LCSuff[i][j]
+    // contains length of longest common suffix of X[0..i-1]
+    // and Y[0..j-1]. The first row and first column entries
+    // have no logical meaning, they are used only for
+    // simplicity of program
+    int LCSuff[m + 1][n + 1];
+ 
+    // To store length of the longest common substring
+    int len = 0;
+ 
+    // To store the index of the cell which contains the 
+    // maximum value. This cell's index helps in building 
+    // up the longest common substring from right to left.
+    int row, col;
+ 
+    /* Following steps build LCSuff[m+1][n+1] in bottom
+       up fashion. */
+    for (int i = 0; i <= m; i++) {
+        for (int j = 0; j <= n; j++) {
+            if (i == 0 || j == 0)
+                LCSuff[i][j] = 0;
+ 
+            else if (X[i - 1] == Y[j - 1]) {
+                LCSuff[i][j] = LCSuff[i - 1][j - 1] + 1;
+                if (len < LCSuff[i][j]) {
+                    len = LCSuff[i][j];
+                    row = i;
+                    col = j;
+                }
+            } else
+                LCSuff[i][j] = 0;
+        }
+    }
+ 
+    // if true, then no common substring exists
+    if (len == 0) {
+        cout << "No Common Substring";
+        return;
+    }
+ 
+    // allocate space for the longest common substring
+    char* resultStr = (char*)malloc((len + 1) * sizeof(char));
+    resultStr[len] = '&#092;&#048;';
+ 
+    // traverse up diagonally form the (row, col) cell
+    // until LCSuff[row][col] != 0
+    while (LCSuff[row][col] != 0) {
+        resultStr[--len] = X[row - 1]; // or Y[col-1]
+ 
+        // move diagonally up to previous cell
+        row--;
+        col--;
+    }
+ 
+    // required longest common substring
+    cout << resultStr;
+}
+ 
+/* Driver program to test above function */
+int main()
+{
+    char X[] = "OldSite:GeeksforGeeks.org";
+    char Y[] = "NewSite:GeeksQuiz.com";
+ 
+    int m = strlen(X);
+    int n = strlen(Y);
+ 
+    printLCSubStr(X, Y, m, n);
+    return 0;
+}
+
+----------------------------------------------------------------------
+
+
+// dynamic programming
+
+			// factorial
+int fact(int n)
+	{
+	    if (n==0){
+	        return 1;
+	    }
+	    if(f[n]!=-1)		//initially initialise all
+	    {					//values to -1
+	        return f[n];
+	    }
+		f[n]=(fact(n-1)*n; //make f[n] as global 
+	        return f[n]%5100000007;
+	    
+	}
+
+
+------------------- Prime number --------------------------
+
+int checkPrimeNumber(int n)
+{
+  bool flag = false;
+
+  for(int i = 2; i <= n/2; ++i)
+  {
+      if(n%i == 0)
+      {
+          flag = true;
+          break;
+      }
+  }
+  return flag;
+}
+
+
+vector<int> SieveOfEratosthenes(int n) 
+{ 
+    // Create a boolean array "prime[0..n]" and initialize 
+    // all entries it as true. A value in prime[i] will 
+    // finally be false if i is Not a prime, else true. 
+    bool prime[n+1]; 
+    memset(prime, true, sizeof(prime)); 
+    std::vector<int> v;
+    for (int p=2; p*p<=n; p++) 
+    { 
+        // If prime[p] is not changed, then it is a prime 
+        if (prime[p] == true) 
+        { 
+            // Update all multiples of p 
+            for (int i=p*2; i<=n; i += p) 
+                prime[i] = false; 
+        } 
+    } 
+  
+    // Print all prime numbers 
+    for (int p=2; p<=n; p++) 
+       if (prime[p]) 
+          v.push_back(p);
+return v;
+} 
+--------------------------------------------------------------------------
+struct Node 
+{
+  int data;
+  struct Node *next;
+};
+ 
+
+int main()
+{
+  struct Node* head = NULL;
+  struct Node* second = NULL;
+  struct Node* third = NULL;
+   
+  // allocate 3 nodes in the heap  
+  head = (struct Node*)malloc(sizeof(struct Node)); 
+  second = (struct Node*)malloc(sizeof(struct Node));
+  third = (struct Node*)malloc(sizeof(struct Node));
+ 
+  /* Three blocks have been allocated  dynamically. 
+     We have pointers to these three blocks as first,
+     second and third     
+       head           second           third
+        |                |               |
+        ]|                |               |
+    +---+-----+     +----+----+     +----+----+
+    | #  | #  |     | #  | #  |     |  # |  # |
+    +---+-----+     +----+----+     +----+----+
+    
+   # represents any random value.
+   Data is random because we haven’t assigned 
+   anything yet  */
+   
+  head->data = 1; //assign data in first node
+  head->next = second; // Link first node with 
+     
+ 
+  return 0;
+}
+-------------------------------------------------------------------------
+
+python
+
+rez = [[m[j][i] for j in range(len(m))] for i in range(len(m[0]))]
+
+transpose  
+
+----------------- important functions ----------
+
+"convert number from integer to binary in vector fromat output"
+vi int2bin(ll a){
+  vi v;
+  while(a){
+    v.eb(a%2);
+    a/=2;
+  }
+  reverse(begin(v),end(v));
+
+  // "to ouptput as a number"
+      ll num = 0;
+      for (int i = 0; i < v.size(); ++i)
+      { num *=10;
+        num += v[i];
+      }
+      return num;
+
+
+
+  return v;
+}
+
+// binary representation of a given number
+void bin(unsigned n) 
+{ 
+    if (n > 1) 
+    bin(n>>1); 
+      
+    printf("%d", n & 1); 
+} 
+
+
+---------KNAPSACK PROBLEM -------
+// Returns the maximum value that can be put in a knapsack of capacity W 
+int knapSack(int W, int wt[], int val[], int n) 
+{ 
+  // w = weights left
+  // n = which element is being processed 
+   int i, w; 
+   int K[n+1][W+1]; 
+  
+   // Build table K[][] in bottom up manner 
+   for (i = 0; i <= n; i++) 
+   { 
+       for (w = 0; w <= W; w++) 
+       { 
+           if (i==0 || w==0) 
+               K[i][w] = 0; 
+           else if (wt[i-1] <= w) 
+                 K[i][w] = max(val[i-1] + K[i-1][w-wt[i-1]],  K[i-1][w]); 
+           else
+                 K[i][w] = K[i-1][w]; 
+       } 
+   } 
+  
+   return K[n][W]; 
+} 
+
