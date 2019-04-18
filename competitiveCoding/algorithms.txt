@@ -5,12 +5,16 @@
 #define mt make_tuple
 #define eb emplace_back
 #define c(a) cout<<"\ncondition :"<<a<<"\n";
-#define el "\n"
+#define el endl // to display output at right place
 #define F first
 #define S second
 #define ALL(x) (x).begin(), (x).end()
 #define FOR(i,a,b,c) for (int i = a; i < b; i+=c)
 #define MAT(v,row,col) vector<vi> > v(row,vi (col,0));
+
+#define tr(c,i) for(typeof(c).begin() i = (c).begin(); i != (c).end(); i++)
+
+
 #define MOD 1000007
 using namespace std;
 
@@ -19,6 +23,17 @@ typedef pair<int, int> ii;
 typedef vector<ii> vii;
 typedef vector<int> vi;
 
+// ***************************  Templates *****************
+
+
+template<typename T, typename... Args>
+auto sum(T a, Args... args) { return a + sum(args...); }
+
+
+
+// ***************************** Code ***********************
+
+int minVal(int x, int y) { return (x < y)? x: y; }
 void run(){
     int r ,maxy =-8;
     cin>>r;
@@ -45,116 +60,81 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
--------------------------------------- print array ---------------------
 
-cout<<"\n output \n";
-for (auto a: var)
-{
-  cout<<a<<" ";
-}
-cout<<"\n";
 
-// set exact precision
-const auto prev_round = std::fegetround();
-std::fesetround(FE_DOWNWARD);
-cout<<setprecision(6)<<fixed<<val<<el;
+------------------ input/print array ---------------------
+    
+    std::vector<int> v(n);
+    for (int i = 0; i < n; ++i) v[i];
+
+============================================================
+  cout<<"\n output \n";
+  for (auto a: var)
+  {
+    cout<<a<<" ";
+  }
+  cout<<"\n";
+
+  // set exact precision
+  const auto prev_round = std::fegetround();
+  std::fesetround(FE_DOWNWARD);
+  cout<<setprecision(6)<<fixed<<val<<el;
+
+
 
 
 ---------------------------power -------------------------
 
-int power(int x, unsigned int y, int p) 
-{ 
-    int res = 1;      // Initialize result 
-    x = x % p; 
-    while (y > 0) 
-    { 
-        // If y is odd, multiply x with result 
-        if (y & 1) 
-            res = (res*x) % p; 
-        y = y>>1; // y = y/2 
-        x = (x*x) % p;   
-    } 
-    return res; 
-} 
+  int power(int x, unsigned int y, int p) 
+  { 
+      int res = 1;      // Initialize result 
+      x = x % p; 
+      while (y > 0) 
+      { 
+          // If y is odd, multiply x with result 
+          if (y & 1) 
+              res = (res*x) % p; 
+          y = y>>1; // y = y/2 
+          x = (x*x) % p;   
+      } 
+      return res; 
+  } 
 
 ------------ msb ---------
 
-int i = std::stoi("01000101", nullptr, 2);
+  i
 
 
-ll setBitNumber(ll n) 
-{ 
-  for (int i = 0; i < sizeof(n); ++i)
-  {
-    n| =n>> pow(2,i);
-  }
-    n = n + 1; 
-    return (n >> 1); 
-} 
-
-
-ll findMsb(ll n) 
-{ 
-  for (int i = 0; i < sizeof(n); ++i)
-  {
-    n |=n >> (int) pow(2,i);
-  }
-    n = n + 1; 
-    return log2(n >> 1)+1; 
-} 
-
-
-int completeXOR(int n) 
-{ 
-    if (n % 4 == 0) 
-        return n; 
-    if (n % 4 == 1) 
-        return 1; 
-    if (n % 4 == 2) 
-        return n + 1; 
-    else
-        return 0; 
-} 
-
-"Xor the numbers from 1 to n"
-long long Xory(long long x){
-    long long a = x % 8;
-    if(a == 0 || a == 1) return x;
-    if(a == 2 || a == 3) return 2;
-    if(a == 4 || a == 5) return x+2;
-    if(a == 6 || a == 7) return 0;
-    return 0;
-}
 --------------find solution of a equation ---------
 
-ll eq(int a){
+  ll eq(int a){
 
-// this is the equation
-return a*(a-1)/2;
+  // this is the equation
+  return a*(a-1)/2;
 
-}
-
-ll solveX(int x){
-// cout<<"x:"<<x<<" ";
-ll a=0,b= 10000,mid,eval;
-  while(a<b){
-
-    mid = (a+b)/2;
-    // cout<<"mid:"<<mid;
-    eval = eq(mid);
-    if( eval == x) return mid;
-
-    if(eval < x){ a = mid+1;
-// cout<<"eval : "<<eval<<"\n";
-}
-
-    if(eval > x){ b = mid-1;
-    }
-    // cout<<"a: "<<a<<" b:"<<b<<"\n";
   }
 
-  return mid;
- }
+  ll solveX(int x){
+  // cout<<"x:"<<x<<" ";
+  ll a=0,b= 10000,mid,eval;
+    while(a<b){
+
+      mid = (a+b)/2;
+      // cout<<"mid:"<<mid;
+      eval = eq(mid);
+      if( eval == x) return mid;
+
+      if(eval < x){ a = mid+1;
+  // cout<<"eval : "<<eval<<"\n";
+  }
+
+      if(eval > x){ b = mid-1;
+      }
+      // cout<<"a: "<<a<<" b:"<<b<<"\n";
+    }
+
+    return mid;
+   }
 
  
 -------------------------------------- links ----------------------------
