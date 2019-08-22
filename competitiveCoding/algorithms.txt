@@ -4,15 +4,27 @@
 #define REP(i,b) for (int i = 0; i < b; i++)
 #define mt make_tuple
 #define eb emplace_back
-#define c(a) cout<<"\ncondition :"<<a<<"\n";
 #define el endl // to display output at right place
 #define F first
 #define S second
 #define ALL(x) (x).begin(), (x).end()
 #define FOR(i,a,b,c) for (int i = a; i < b; i+=c)
 #define MAT(v,row,col) vector<vi> > v(row,vi (col,0));
+// modular exponentiation
+#define modexp ll power(ll x, ll y, ll p){ int res = 1; x = x % p; while(y>0){ if(y&1) res = (res*x) % p; y = y>>1; x = (x*x) % p; } return res; }
+// 2D matrix
+#define v2(dp,r,value) vector<std::vector<int> > dp(r,std::vector<int> (r,value))
 
 #define tr(c,i) for(typeof(c).begin() i = (c).begin(); i != (c).end(); i++)
+
+// impo functions
+#define sumofdigits(sum,num) int sum = 0; while (n != 0) { sum = sum + n % 10; n = n/10; }
+#define int2str(str,n) n=boost::lexical_cast<int>(str);
+
+// debugging 
+#define debug1(x) cerr<<#x<<" = "<<x<<"\n"
+#define debug2(a,b) cout<<a<<" "<<b<<endl;
+#define debug3(a,b,c) cout<<a<<" "<<b<<" "<<c<<"\n";
 
 
 #define MOD 1000007
@@ -22,37 +34,42 @@ typedef long long ll;
 typedef pair<int, int> ii; 
 typedef vector<ii> vii;
 typedef vector<int> vi;
+typedef vector<ll> vl;
 
 // ***************************  Templates *****************
 
 
-template<typename T, typename... Args>
-auto sum(T a, Args... args) { return a + sum(args...); }
+// template<typename T, typename... Args>
+// auto sum(T a, Args... args) { return a + sum(args...); }
 
 
 
 // ***************************** Code ***********************
-
-int minVal(int x, int y) { return (x < y)? x: y; }
-void run(){
-    int r ,maxy =-8;
-    cin>>r;
-    vi v;
-    REP(i,r){
-      int temp;
-      cin>>temp;
-      v.eb(temp);
-      if (maxy < temp)
+void displayVector(vi var){
+      cout<<"\n output \n";
+      for (auto a: var)
       {
-        maxy = temp;
+        cout<<a<<" ";
       }
+      cout<<"\n";
     }
+
+void run(){
+    int n ,maxy =-8;
+    cin>>n;
+    vi v(n);
+    REP(i,n) cin>>v[i];
+      
 }
 
 int main(int argc, char const *argv[])
-{	ios::sync_with_stdio(0);
+{	
+    // fast input
+    ios::sync_with_stdio(0);
     cin.tie(0);
-    int t;
+    cout.tie(0);
+
+    int t =1;
 	cin>>t;
 	while(t--){
     run();
@@ -64,48 +81,56 @@ int main(int argc, char const *argv[])
 
 ------------------ input/print array ---------------------
     
-    std::vector<int> v(n);
-    for (int i = 0; i < n; ++i) v[i];
+std::vector<int> v(n);
+for (int i = 0; i < n; ++i) v[i];
 
 ============================================================
-  cout<<"\n output \n";
-  for (auto a: var)
-  {
-    cout<<a<<" ";
-  }
-  cout<<"\n";
 
   // set exact precision
   const auto prev_round = std::fegetround();
   std::fesetround(FE_DOWNWARD);
   cout<<setprecision(6)<<fixed<<val<<el;
 
+// --------------------time a fucntion ---------------------
+
+void timeit(){
+  auto start = high_resolution_clock::now();
+
+  cout<<power(2,30);
+
+  auto stop = high_resolution_clock::now();
+  auto duration = duration_cast<microseconds>(stop-start);
+  cout<<"Time taken ->"<<duration.count()<<" ms\n";
+}
 
 
+---------------------------Find Maximum sum  of an array--------------
 
----------------------------power -------------------------
-
-  int power(int x, unsigned int y, int p) 
+int FindMaxSum(int arr[], int n) 
+{ 
+  int incl = arr[0]; 
+  int excl = 0; 
+  int excl_new; 
+  int i; 
+  
+  for (i = 1; i < n; i++) 
   { 
-      int res = 1;      // Initialize result 
-      x = x % p; 
-      while (y > 0) 
-      { 
-          // If y is odd, multiply x with result 
-          if (y & 1) 
-              res = (res*x) % p; 
-          y = y>>1; // y = y/2 
-          x = (x*x) % p;   
-      } 
-      return res; 
+     /* current max excluding i */
+     excl_new = (incl > excl)? incl: excl; 
+  
+     /* current max including i */
+     incl = excl + arr[i]; 
+     excl = excl_new; 
   } 
+  
+   /* return max of incl and excl */
+   return ((incl > excl)? incl : excl); 
+} 
 
------------- msb ---------
 
-  i
+  
 
-
---------------find solution of a equation ---------
+// --------------find solution of a equation ---------
 
   ll eq(int a){
 
@@ -194,47 +219,7 @@ int ps(int currSum, int power ,int number, int lim, int t){
     return sum;
 }
 
----------------------------------------		// quick sort-------------------
-void swap(int* a, int* b)
-{
-    int t = *a;
-    *a = *b;
-    *b = t;
-}
 
-int partition (int arr[], int low, int high)
-{
-    int pivot = arr[high];    // pivot
-    int i = (low - 1);  // Index of smaller element
- 
-    for (int j = low; j <= high- 1; j++)
-    {
-        // If current element is smaller than or
-        // equal to pivot
-        if (arr[j] <= pivot)
-        {
-            i++;    // increment index of smaller element
-            swap(&arr[i], &arr[j]);
-        }
-    }
-    swap(&arr[i + 1], &arr[high]);
-    return (i + 1);
-}
-
-void quickSort(int arr[], int low, int high)
-{
-    if (low < high)
-    {
-        /* pi is partitioning index, arr[p] is now
-           at right place */
-        int pi = partition(arr, low, high);
- 
-        // Separately sort elements before
-        // partition and after partition
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
-    }
-}
 ---------------------------------------------
 // C++ implementation to print the longest common substring
 #include <iostream>
@@ -335,43 +320,20 @@ int fact(int n)
 	        return f[n];
 	    }
 		f[n]=(fact(n-1)*n; //make f[n] as global 
-	        return f[n]%5100000007;
-	    
-	}
+	return f[n]%5100000007;
+        }
 
 
-------------------- Prime number --------------------------
 
-int checkPrimeNumber(int n)
-{
-  bool flag = false;
-
-  for(int i = 2; i <= n/2; ++i)
-  {
-      if(n%i == 0)
-      {
-          flag = true;
-          break;
-      }
-  }
-  return flag;
-}
-
-
-vector<int> SieveOfEratosthenes(int n) 
+unordered_set<int> isprime(int n) 
 { 
-    // Create a boolean array "prime[0..n]" and initialize 
-    // all entries it as true. A value in prime[i] will 
-    // finally be false if i is Not a prime, else true. 
     bool prime[n+1]; 
     memset(prime, true, sizeof(prime)); 
-    std::vector<int> v;
+    unordered_set<int> v;
     for (int p=2; p*p<=n; p++) 
     { 
-        // If prime[p] is not changed, then it is a prime 
         if (prime[p] == true) 
         { 
-            // Update all multiples of p 
             for (int i=p*2; i<=n; i += p) 
                 prime[i] = false; 
         } 
@@ -380,7 +342,7 @@ vector<int> SieveOfEratosthenes(int n)
     // Print all prime numbers 
     for (int p=2; p<=n; p++) 
        if (prime[p]) 
-          v.push_back(p);
+          v.insert(p);
 return v;
 } 
 --------------------------------------------------------------------------
@@ -490,3 +452,39 @@ int knapSack(int W, int wt[], int val[], int n)
    return K[n][W]; 
 } 
 
+-------------- Binary search ---------------
+
+ int binarySearch(int[] a, int n, int item)
+ {  
+    int low = 0;
+    int high = n - 1;
+    while(low<=high){
+    {
+      int mid = (low + high)/2;
+      if (a[mid] == item) return mid;
+      else if (a[mid] < item) low = mid + 1;
+      else high = mid - 1;
+    } 
+    return -1;
+ }
+lower_bound(ALL(v),element);
+
+ll bsearch(std::vector<tuple<int,int> > &v,ll low, ll high, ll value){
+
+
+  while(low <= high){
+  int mid = (low+high)/2;
+
+  if(get<0>(v[mid]) == value) return mid;
+  if(get<0>(v[mid]) < value) low = mid+1 ;
+  else high = mid;
+
+
+  }
+  return low;
+
+
+  }
+
+
+ -----------------------------------
