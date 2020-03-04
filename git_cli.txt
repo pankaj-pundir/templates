@@ -1,0 +1,14 @@
+---------------------------------------------- GIT HUB CLI --------------------------------------
+## Pankaj Pundir ##
+
+git branch 
+// list out the current branches
+
+git branch gitcli 
+// creates new branch name "gitcli"
+
+git checkout gitcli
+// to switch the branch to 'gitcli'
+
+git commit -am "added the gitcli file" 
+// -am flag is use to add the files and commit the changes
