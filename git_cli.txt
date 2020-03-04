@@ -1,6 +1,9 @@
 ---------------------------------------------- GIT HUB CLI --------------------------------------
 ## Pankaj Pundir ##
 
+
+---- branching
+
 git branch 
 // list out the current branches
 
@@ -36,3 +39,5 @@ git branch -m feature/new-feature
 
 git branch -m old-name new-name
 // a bit modifications
+
+--- merging
