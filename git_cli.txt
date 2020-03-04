@@ -12,3 +12,27 @@ git checkout gitcli
 
 git commit -am "added the gitcli file" 
 // -am flag is use to add the files and commit the changes
+
+git add git_cli.txt
+// add the file to be tracked by git
+
+git stash save "newFiles"
+// save the modifications on the local and allow to switch the branches
+
+git stash pop
+// revert to the changes that was earlierly stashed
+
+git checkout -b ferature/new-feature
+// create a new brach with reference to the currently active branch.
+
+git stash list
+//You can stack several changes and check the current stash stack using:
+
+git stash pop "stash@{1}"
+//You can also unstash a specific stash by using
+
+git branch -m feature/new-feature
+// rename the current branch
+
+git branch -m old-name new-name
+// a bit modifications
