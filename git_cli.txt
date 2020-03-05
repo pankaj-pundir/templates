@@ -41,3 +41,9 @@ git branch -m old-name new-name
 // a bit modifications
 
 --- merging
+
+git merge feature/new-feature
+// merge the new branch with the feature/new-feature branch
+
+git show aaa726df451bfeca797261cf206a679f2947a91b
+// show the commit using the hash of commit
