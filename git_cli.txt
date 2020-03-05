@@ -1,0 +1,49 @@
+---------------------------------------------- GIT HUB CLI --------------------------------------
+## Pankaj Pundir ##
+
+
+---- branching
+
+git branch 
+// list out the current branches
+
+git branch gitcli 
+// creates new branch name "gitcli"
+
+git checkout gitcli
+// to switch the branch to 'gitcli'
+
+git commit -am "added the gitcli file" 
+// -am flag is use to add the files and commit the changes
+
+git add git_cli.txt
+// add the file to be tracked by git
+
+git stash save "newFiles"
+// save the modifications on the local and allow to switch the branches
+
+git stash pop
+// revert to the changes that was earlierly stashed
+
+git checkout -b ferature/new-feature
+// create a new brach with reference to the currently active branch.
+
+git stash list
+//You can stack several changes and check the current stash stack using:
+
+git stash pop "stash@{1}"
+//You can also unstash a specific stash by using
+
+git branch -m feature/new-feature
+// rename the current branch
+
+git branch -m old-name new-name
+// a bit modifications
+
+--- merging
+
+git merge feature/new-feature
+// merge the new branch with the feature/new-feature branch
+
+git show aaa726df451bfeca797261cf206a679f2947a91b
+// show the commit using the hash of commit
