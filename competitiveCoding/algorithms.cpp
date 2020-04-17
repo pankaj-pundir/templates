@@ -111,27 +111,19 @@ void timeit(){
 }
 
 
----------------------------Find Maximum sum  of an array--------------
+---------------------------Find Maximum sum of contiguous array elements -------------
 
-int FindMaxSum(int arr[], int n) 
+int Kadane(int arr[], int n) 
 { 
-  int incl = arr[0]; 
-  int excl = 0; 
-  int excl_new; 
-  int i; 
+  int max_so_far = a[0]; 
+   int curr_max = a[0]; 
   
-  for (i = 1; i < n; i++) 
-  { 
-     /* current max excluding i */
-     excl_new = (incl > excl)? incl: excl; 
-  
-     /* current max including i */
-     incl = excl + arr[i]; 
-     excl = excl_new; 
-  } 
-  
-   /* return max of incl and excl */
-   return ((incl > excl)? incl : excl); 
+   for (int i = 1; i < size; i++) 
+   { 
+        curr_max = max(a[i], curr_max+a[i]); 
+        max_so_far = max(max_so_far, curr_max); 
+   } 
+   return max_so_far; 
 } 
 
 
