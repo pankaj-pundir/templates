@@ -45,6 +45,13 @@ typedef vector<ll> vl;
 
 
 // ***************************** Code ***********************
+bool sortInv(const pair<int,int> &a,  
+               const pair<int,int> &b) 
+{ 
+       return (a.first > b.first); 
+}
+
+
 void displayVector(vi var){
       cout<<"\n output \n";
       for (auto a: var)
