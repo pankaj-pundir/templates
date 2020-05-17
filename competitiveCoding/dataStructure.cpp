@@ -1,6 +1,75 @@
 // ---------------- Data Structures-----------------
 
 
+// vector
+std::vector<tuple<int,int,int> > v, w(10,5),z(ALL(w)); //ALL() w.begin(),w.end()
+v.push_back({1,2,5}); v.emblce_back(3);  //insert elements
+v.size();   // size
+v[3]; v.back();
+
+// string
+string s = "pankaj";
+string h = s.substr(2,3); // "nka"
+
+
+// set
+set<int> s;   // sorted form
+unordered_set <int> s;   // faster 
+multiset<int> s;   //multiple elements allowed
+s.insert(3);
+s.count(3); // check the element is present
+s.find(3);  //return an iterator
+
+// map
+map<string, int> m;
+unordered_map <string, vector<int> > um;
+m["monkey"] = 4; //setting an element
+m["monkey"]; // accessing the element
+for(auto k :m) k.first; k.second; // elements access
+
+
+// bitset   -- less memory
+bitset<10> b, a(string("001010110"));  // value can be 0 or 1
+b.count(); // returns number of 1 in the bitset
+a&b; a|b; a^b; // and or xor
+
+// deque   -- can be changed from both sides of the array
+deque<int> d;  // slower than the vector due to complex implementation
+d.push_back(3);  d.pop_back(5);
+d.push_front(4); d.pop_front(4);
+
+// queue -- add back remove front
+queue<int> q;
+q.push(2);
+q.front();
+q.pop();
+
+// priority Queue   insertion and removal O(logn)  retrieval o(1)
+// implemented using a heap struucture rather than balanced binary tree (ordered set)
+priority_queue<int> pq; // decreasing order
+pq.push(3);
+pq.top();
+pq.pop();
+priority_queue<int, std::vector<int> ,greater<int> > pq; // finding and reamoving smallest element
+
+
+// stack 
+stack<int> s;
+s.push(2);
+s.top();
+s.pop(); 
+
+
+// common functions
+reverse(ALL(v));
+sort(ALL(v));
+random_shuffle(ALL(v));
+
+v.lower_bound(x); // find the element less than x in v
+v.upper_bound(x); // find the element greater than x in v
+auto ind = lower_bound(v.begin(),v.end(),value) - v;
+v[ind]; // the loc 
+
 // longest common subseuence problem 
     int lcs( string &X, string &Y, int m, int n ) 
     { 
@@ -41,7 +110,14 @@
           } 
 
 // Custom Structure
-
+  struct P
+  { int x,y; 
+    bool operator<(const & P &p){
+      if (x != p.x) return x < p.x; // sort by sec
+      else return y < p.y;  //sort by sec
+    } 
+    
+  };
 
 
 // ------------- Sort -------------
