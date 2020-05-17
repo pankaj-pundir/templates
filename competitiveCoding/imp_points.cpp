@@ -12,6 +12,7 @@ vector<map<int,int>::value_type > vv(um.begin(),um.end()); // copy map elements 
 
 
 make_heap(v1.begin(), v1.end());  //make heap
+v1.front() // maximum element of the heap
 push_heap(v1.begin(), v1.end()); // reoreder the heap
 pop_heap(v1.begin(), v1.end()); 
 v1.pop_back(); 
