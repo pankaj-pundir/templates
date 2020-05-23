@@ -65,4 +65,30 @@
 
 	// Knapsack problem
 
-		
+		Fixed Knapsack create a sum using the given values. Use matrix 
+		ans[n][m] = min(ans[n-1][m-w]) where 'w' belongs to the 'array'
+
+	// Edit distance Levenshtein Distance
+		1. insert 2. remove 3. modify  these operations to make two stings same
+		2D matrix with '0' rows available
+
+		Dist(a,b) = min(Dist(a,b-1)+1,Dist(a-1,b)+1,Dist(a-1,b-1)) + cost(a,b) 
+		cost(a,b) == 0 if a==b else 1
+
+	// Two pointer Method
+		1. Subarray sum
+			-- start both from left and move forward
+		2. 2Sum method  
+			-- sort the array
+			-- start from left and right simulataneously and converge the range
+
+	// Nearest Smallest element
+		-- Use stack
+		-- push the element until smaller than top is found
+		-- pop the element until smaller element is encounter or stack is empty
+
+	// Sliding window minimum
+		-- Use queue
+		-- keep track of of number location and the minimum is in front
+
+// Range Queries
