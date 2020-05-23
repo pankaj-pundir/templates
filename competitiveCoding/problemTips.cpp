@@ -92,3 +92,8 @@
 		-- keep track of of number location and the minimum is in front
 
 // Range Queries
+	
+	// Static Array Queries
+
+		--sum [prefix sum]
+		
