@@ -19,6 +19,10 @@ v1.pop_back();
       
 next_permutation(ALL(v)); // generates next permutation in increasing order
 
+// always store the length of string in an integer varialble
+int size= s.length();
+
+
 // when comes to grouping think about SORTING
 // Default values of map is 0, if not initialized
 
@@ -38,6 +42,67 @@ Deletion time   | log(n) + Rebalance  | Same as search
 
 //  while traversing stack used while loop
 //  maps cannot be accesed using indexes
+
+
+// Modular operations
+
+
+const int N = 500043;
+const int MOD = 998244353;
+
+int fact[N];
+
+int add(int x, int y)
+{
+	x += y;
+	while(x >= MOD) x -= MOD;
+	while(x < 0) x += MOD;
+	return x;
+}
+
+int mul(int x, int y)
+{
+	return (x * 1ll * y) % MOD;
+}
+
+int binpow(int x, int y)
+{
+	int z = 1;
+	while(y > 0)
+	{
+		if(y % 2 == 1)
+			z = mul(z, x);
+		x = mul(x, x);
+		y /= 2;
+	}
+	return z;
+}
+
+int inv(int x)
+{
+	return binpow(x, MOD - 2);
+}
+
+int divide(int x, int y)
+{
+	return mul(x, inv(y));
+}
+
+void precalc()
+{
+	fact[0] = 1;
+	for(int i = 1; i < N; i++)
+		fact[i] = mul(i, fact[i - 1]);
+}
+
+int C(int n, int k)
+{
+	if(k > n) return 0;
+	return divide(fact[n], mul(fact[n - k], fact[k]));
+}
+
+
+// modular section with inv. properties  above
 
 ListNode* middleNode(ListNode* head) {
         ListNode* th = head;

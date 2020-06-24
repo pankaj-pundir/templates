@@ -1,5 +1,18 @@
 // Famous problems
 
+// Subarray sum problem number of continues array to sum 'k'
+	-- Do prefix sum and use hashmap to check is prefSum-k exist in hashmap
+	 unordered_map < int,int> un;
+        un[0] = 1;
+        int sumy =0,count =0;
+        for(int i=0;i < size;i++){
+            sumy += nums[i];
+            if(un.count(sumy-k)) count+=un[sumy-k];
+            un[sumy] +=1;      
+        }
+        return count;
+
+
 // N queens problem
 	use backtracking
 		use array flags for column and row and diagonal (both)
@@ -68,6 +81,34 @@
 		Fixed Knapsack create a sum using the given values. Use matrix 
 		ans[n][m] = min(ans[n-1][m-w]) where 'w' belongs to the 'array'
 
+		---------KNAPSACK PROBLEM -------
+		// Returns the maximum value that can be put in a knapsack of capacity W 
+		int knapSack(int W, int wt[], int val[], int n) 
+		{ 
+		  // w = weights left
+		  // n = which element is being processed 
+		   int i, w; 
+		   int K[n+1][W+1]; 
+		  
+		   // Build table K[][] in bottom up manner 
+		   for (i = 0; i <= n; i++) 
+		   { 
+		       for (w = 0; w <= W; w++) 
+		       { 
+		           if (i==0 || w==0) 
+		               K[i][w] = 0; 
+		           else if (wt[i-1] <= w) 
+		                 K[i][w] = max(val[i-1] + K[i-1][w-wt[i-1]],  K[i-1][w]); 
+		           else
+		                 K[i][w] = K[i-1][w]; 
+		       } 
+		   } 
+		   return K[n][W]; 
+		} 
+
+	// Longest common subsequence
+		-- DP[i][j] = DP[i - 1][j - 1] + 1 , if text1[i] == text2[j] DP[i][j] = max(DP[i - 1][j], DP[i][j - 1]) , otherwise
+
 	// Edit distance Levenshtein Distance
 		1. insert 2. remove 3. modify  these operations to make two stings same
 		2D matrix with '0' rows available
@@ -90,6 +131,10 @@
 	// Sliding window minimum
 		-- Use queue
 		-- keep track of of number location and the minimum is in front
+
+	// maximum size of square in matrix
+		-- use DP solun O(mn)
+		-- dp[i][j] = min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1])+1
 
 // Range Queries
 	

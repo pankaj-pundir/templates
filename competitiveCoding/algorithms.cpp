@@ -312,7 +312,7 @@ int main()
 
 			// factorial
 int fact(int n)
-	{
+	
 	    if (n==0){
 	        return 1;
 	    }
@@ -322,7 +322,7 @@ int fact(int n)
 	    }
 		f[n]=(fact(n-1)*n; //make f[n] as global 
 	return f[n]%5100000007;
-        }
+  
 
 
 
@@ -398,23 +398,28 @@ transpose
 "convert number from integer to binary in vector fromat output"
 vi int2bin(ll a){
   vi v;
-  while(a){
-    v.eb(a%2);
-    a/=2;
+  int size = 32;
+  if(a==0) {
+    while(v.size() < size){
+    v.eb(0);
   }
-  reverse(begin(v),end(v));
-
-  // "to ouptput as a number"
-      ll num = 0;
-      for (int i = 0; i < v.size(); ++i)
-      { num *=10;
-        num += v[i];
-      }
-      return num;
-
-
-
+    return v;
+  }
+  while(a>0){
+    v.eb(a&1);
+    a>>=1;
+  }
+  while(v.size() < size){
+    v.eb(0);
+  }
   return v;
+}
+
+int bin2int(std::vector<int> v){
+  int num = 0;
+  for (int i = 0; i < v.size(); ++i)
+    num += v[i]+num*10;
+  return num;
 }
 
 // binary representation of a given number
@@ -427,31 +432,7 @@ void bin(unsigned n)
 } 
 
 
----------KNAPSACK PROBLEM -------
-// Returns the maximum value that can be put in a knapsack of capacity W 
-int knapSack(int W, int wt[], int val[], int n) 
-{ 
-  // w = weights left
-  // n = which element is being processed 
-   int i, w; 
-   int K[n+1][W+1]; 
-  
-   // Build table K[][] in bottom up manner 
-   for (i = 0; i <= n; i++) 
-   { 
-       for (w = 0; w <= W; w++) 
-       { 
-           if (i==0 || w==0) 
-               K[i][w] = 0; 
-           else if (wt[i-1] <= w) 
-                 K[i][w] = max(val[i-1] + K[i-1][w-wt[i-1]],  K[i-1][w]); 
-           else
-                 K[i][w] = K[i-1][w]; 
-       } 
-   } 
-  
-   return K[n][W]; 
-} 
+
 
 -------------- Binary search ---------------
 

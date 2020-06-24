@@ -70,6 +70,41 @@ v.upper_bound(x); // find the element greater than x in v
 auto ind = lower_bound(v.begin(),v.end(),value) - v;
 v[ind]; // the loc 
 
+
+// Fenwick Tree
+
+class FenwickTree
+{
+    std::vector<int> v;
+    int size = 0;
+    public:
+    FenwickTree(std::vector<int> &v_new){
+        size = v_new.size();
+        v.resize(size);
+        for (int i = 0; i <= size; ++i)
+            update(i,v_new[i]);
+        // cout<<" Fenwick Tree Created Indexing with 1 \n";
+    }
+    
+    ll getSum( int index){
+      ll sumy = 0;
+      while(index>0){
+        sumy += v[index];
+        index = (index & (index+1))-1;
+      }
+      return sumy;
+    }
+
+    void update(int index,int delta){
+      while(index <= size){
+        v[index] += delta;
+        index = index | (index+1);
+      }
+    }
+    // ~FenwickTree();
+};
+
+
 // longest common subseuence problem 
     int lcs( string &X, string &Y, int m, int n ) 
     { 
