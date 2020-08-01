@@ -257,7 +257,7 @@ void convertMIN(vl &v){
 
 	// ==== last prime using seives ======
 
-	void sieve()
+	void LastPrimeSieve()
 	{
 	    lp[1]=1,lp[0]=0;
 	    for(ll i=2; i<=1000000; i++)
@@ -275,6 +275,7 @@ void convertMIN(vl &v){
 	        }
 	    }
 	}
+
 
 // power with mod
 	//-------  fast exponention 2k ary method ------------------
