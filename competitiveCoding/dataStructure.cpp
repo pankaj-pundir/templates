@@ -105,14 +105,10 @@ class FenwickTree
 };
 
 
-// longest common subseuence problem 
+// longest common subseqence problem 
     int lcs( string &X, string &Y, int m, int n ) 
     { 
-       int L[m+
-
-
-
-        1][n+1]; 
+       int L[m+1][n+1]; 
        int i, j; 
        
        /* Following steps build L[m+1][n+1] in bottom up fashion. Note  
@@ -129,7 +125,8 @@ class FenwickTree
        
            else
              L[i][j] = max(L[i-1][j], L[i][j-1]); 
-         } 
+           // L[i][j] = 0;   If substring
+          } 
        } 
          
        /* L[m][n] contains length of LCS for X[0..n-1] and Y[0..m-1] */
@@ -158,7 +155,12 @@ class FenwickTree
 // ------------- Sort -------------
 
 
-
+bool rev(const int a,  
+               const int b) 
+{ 
+   return a>b;
+    // change sign to sort it with decreasing order
+} 
 // sort 1 element ascending order for tie 2nd element in dec order
 
 bool sortbysec(const tuple<int, int>& a,  

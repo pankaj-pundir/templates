@@ -92,7 +92,7 @@ int main(int argc, char const *argv[])
 ------------------ input/print array ---------------------
     
 std::vector<int> v(n);
-for (int i = 0; i < n; ++i) v[i];
+for (int i = 0; i < n; ++i) cin>>v[i];
 
 ============================================================
 

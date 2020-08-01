@@ -1,5 +1,9 @@
 // Famous problems
 
+// Adhoc problems
+	-- # Lazy Cateres problem
+	ans = (n * ( n + 1)) / 2 + 1; 
+
 // Subarray sum problem number of continues array to sum 'k'
 	-- Do prefix sum and use hashmap to check is prefSum-k exist in hashmap
 	 unordered_map < int,int> un;
@@ -135,7 +139,22 @@
 	// maximum size of square in matrix
 		-- use DP solun O(mn)
 		-- dp[i][j] = min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1])+1
+ans[i][j] = prefix[x2][y2] - prefix[x1][y2] - prefix[x2][y1] + prefix[x1][y1];
+	// Matrix Block Sum
+		-- given n*m matrix sum sq block of side 2K*2K for every index
 
+		//prefix calc
+		for i in range(1,n+1):
+            for j in range(1,m+1):
+                prefix[i][j] =  prefix[i-1][j] + mat[i-1][j-1]+ \
+            	prefix[i][j - 1] - prefix[i - 1][j - 1] 
+        //find value of every cell
+        ans[i][j] = prefix[x2][y2] - prefix[x1][y2] - prefix[x2][y1] + prefix[x1][y1];
+
+    // Array value max in two player
+        -- think in MinMax game perspective.
+
+        
 // Range Queries
 	
 	// Static Array Queries

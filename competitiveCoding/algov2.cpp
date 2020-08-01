@@ -255,17 +255,39 @@ void convertMIN(vl &v){
 	  return v;
 	} 
 
+	// ==== last prime using seives ======
+
+	void sieve()
+	{
+	    lp[1]=1,lp[0]=0;
+	    for(ll i=2; i<=1000000; i++)
+	    {
+	        if(lp[i]==0)
+	        {
+	            lp[i]=i;
+	            for(ll j=i*i; j<=1000000; j+=i)
+	            {
+	                if(lp[j]==0)
+	                {
+	                    lp[j]=i;
+	                }
+	            }
+	        }
+	    }
+	}
+
 // power with mod
 	//-------  fast exponention 2k ary method ------------------
 
-	ll fast_exp(int base, int exp) {
-	    ll res=1;
-	    while(exp>0) {
-	       if(exp%2==1) res=(res*base)%MOD;
-	       base=(base*base)%MOD;
-	       exp/=2;
-	    }
-	    return res%MOD;
+
+	ll BinPow(ll a,ll b,ll m){
+    ll ans = 1;
+    while(b){
+        if(b & 1)ans = ans *1ll* a % m;
+        a = a *1ll* a % m;
+        b >>= 1;
+    }
+    return ans;
 	}
 
 // Combination with mod 
