@@ -45,6 +45,16 @@ typedef vector<ll> vl;
 
 
 // ***************************** Code ***********************
+struct P
+  { int x,y; 
+    bool operator<(const & P &p){
+      if (x != p.x) return x < p.x; // sort by sec
+      else return y < p.y;  //sort by sec
+    } 
+    
+  };
+
+
 void displayVector(vi var){
       cout<<"\n output \n";
       for (auto a: var)
@@ -82,7 +92,7 @@ int main(int argc, char const *argv[])
 ------------------ input/print array ---------------------
     
 std::vector<int> v(n);
-for (int i = 0; i < n; ++i) v[i];
+for (int i = 0; i < n; ++i) cin>>v[i];
 
 ============================================================
 
@@ -104,31 +114,22 @@ void timeit(){
 }
 
 
----------------------------Find Maximum sum  of an array--------------
+// Find Maximum sum of contiguous array elements Kadane
 
-int FindMaxSum(int arr[], int n) 
-{ 
-  int incl = arr[0]; 
-  int excl = 0; 
-  int excl_new; 
-  int i; 
-  
-  for (i = 1; i < n; i++) 
+  int Kadane(int arr[], int n) 
   { 
-     /* current max excluding i */
-     excl_new = (incl > excl)? incl: excl; 
-  
-     /* current max including i */
-     incl = excl + arr[i]; 
-     excl = excl_new; 
+    int max_so_far = a[0]; 
+     int curr_max = a[0]; 
+    
+     for (int i = 1; i < size; i++) 
+     { 
+          curr_max = max(a[i], curr_max+a[i]); 
+          max_so_far = max(max_so_far, curr_max); 
+     } 
+     return max_so_far; 
   } 
-  
-   /* return max of incl and excl */
-   return ((incl > excl)? incl : excl); 
-} 
 
 
-  
 
 // --------------find solution of a equation ---------
 
@@ -311,7 +312,7 @@ int main()
 
 			// factorial
 int fact(int n)
-	{
+	
 	    if (n==0){
 	        return 1;
 	    }
@@ -321,7 +322,7 @@ int fact(int n)
 	    }
 		f[n]=(fact(n-1)*n; //make f[n] as global 
 	return f[n]%5100000007;
-        }
+  
 
 
 
@@ -397,23 +398,28 @@ transpose
 "convert number from integer to binary in vector fromat output"
 vi int2bin(ll a){
   vi v;
-  while(a){
-    v.eb(a%2);
-    a/=2;
+  int size = 32;
+  if(a==0) {
+    while(v.size() < size){
+    v.eb(0);
   }
-  reverse(begin(v),end(v));
-
-  // "to ouptput as a number"
-      ll num = 0;
-      for (int i = 0; i < v.size(); ++i)
-      { num *=10;
-        num += v[i];
-      }
-      return num;
-
-
-
+    return v;
+  }
+  while(a>0){
+    v.eb(a&1);
+    a>>=1;
+  }
+  while(v.size() < size){
+    v.eb(0);
+  }
   return v;
+}
+
+int bin2int(std::vector<int> v){
+  int num = 0;
+  for (int i = 0; i < v.size(); ++i)
+    num += v[i]+num*10;
+  return num;
 }
 
 // binary representation of a given number
@@ -426,31 +432,7 @@ void bin(unsigned n)
 } 
 
 
----------KNAPSACK PROBLEM -------
-// Returns the maximum value that can be put in a knapsack of capacity W 
-int knapSack(int W, int wt[], int val[], int n) 
-{ 
-  // w = weights left
-  // n = which element is being processed 
-   int i, w; 
-   int K[n+1][W+1]; 
-  
-   // Build table K[][] in bottom up manner 
-   for (i = 0; i <= n; i++) 
-   { 
-       for (w = 0; w <= W; w++) 
-       { 
-           if (i==0 || w==0) 
-               K[i][w] = 0; 
-           else if (wt[i-1] <= w) 
-                 K[i][w] = max(val[i-1] + K[i-1][w-wt[i-1]],  K[i-1][w]); 
-           else
-                 K[i][w] = K[i-1][w]; 
-       } 
-   } 
-  
-   return K[n][W]; 
-} 
+
 
 -------------- Binary search ---------------
 
