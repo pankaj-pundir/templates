@@ -9,7 +9,7 @@
 #define S second
 #define ALL(x) (x).begin(), (x).end()
 #define FOR(i,a,b,c) for (int i = a; i < b; i+=c)
-#define MAT(v,row,col) vector<vi> > v(row,vi (col,0));
+#define MAT(v,row,col) vector<vi> > v(row,vi (col,0)); // doubtful
 // modular exponentiation
 #define modexp ll power(ll x, ll y, ll p){ int res = 1; x = x % p; while(y>0){ if(y&1) res = (res*x) % p; y = y>>1; x = (x*x) % p; } return res; }
 // 2D matrix
@@ -20,7 +20,7 @@
 // impo functions
 #define sumofdigits(sum,num) int sum = 0; while (n != 0) { sum = sum + n % 10; n = n/10; }
 #define int2str(str,n) n=boost::lexical_cast<int>(str);
-
+#define fastio ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 // debugging 
 #define debug1(x) cerr<<#x<<" = "<<x<<"\n"
 #define debug2(a,b) cout<<a<<" "<<b<<endl;
@@ -31,43 +31,67 @@
 using namespace std;
 
 typedef long long ll; 
-typedef pair<int, int> ii; 
-typedef vector<ii> vii;
+typedef pair<int, int> pii; 
+typedef vector<pii> vpii;
 typedef vector<int> vi;
-typedef vector<ll> vl;
+typedef vector<ll> vll;
+
+// try to read it in a normal conventions
 
 // ***************************  Templates *****************
 
+  // sum the numbers
+  template<class T>
+      auto sum(T a) {return a;}
+  template<typename T, typename... Args>
+  auto sum(T a, Args... args) { return a + sum(args...); }
 
-// template<typename T, typename... Args>
-// auto sum(T a, Args... args) { return a + sum(args...); }
+  // display all the content 
+  template<class T>
+  void print(T a){
+      cout<<a<<"\n";
+      }
+  template<typename T,typename... types>
+  void print(const T& a,const types& ... args){
+    cout<<a<<",";
+    print(args...);
+      }
 
+  // vector print template
+
+  template<typename T1,typename T2>ostream& operator<<(ostream& os,pair<T1,T2> ptt){
+      os<<ptt.first<<","<<ptt.second;
+      return os;
+      }
+
+
+  template<typename T>ostream& operator<<(ostream& os,vector<T> vt){
+  os<<"{";    for(auto i:vt)
+          os<<i<<","; os<<"}"; return os;
+  }
+
+
+// ******************* useful functions *******************
+
+inline double log(ll a,ll b){
+    return log10(a)/log10(b);
+}
 
 
 // ***************************** Code ***********************
-void displayVector(vi var){
-      cout<<"\n output \n";
-      for (auto a: var)
-      {
-        cout<<a<<" ";
-      }
-      cout<<"\n";
-    }
+
 
 void run(){
-    int n ,maxy =-8;
+    ll n ,maxy =-8;
     cin>>n;
-    vi v(n);
+    vll v(n);
     REP(i,n) cin>>v[i];
       
 }
 
-int main(int argc, char const *argv[])
+ll main()
 {	
-    // fast input
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
+    fastio
 
     int t =1;
 	cin>>t;
@@ -79,12 +103,12 @@ int main(int argc, char const *argv[])
 
 
 
------------------- input/print array ---------------------
+//------------------ input/print array ---------------------
     
 std::vector<int> v(n);
 for (int i = 0; i < n; ++i) v[i];
 
-============================================================
+//============================================================
 
   // set exact precision
   const auto prev_round = std::fegetround();
@@ -180,7 +204,7 @@ int main(){
     pairs p[5]; //array of pair objects
     for (int i =0; i<5; i++){
         p[i].first= (i+1)*10; //inserting first element of pair
-        p[i].second = (i+1); //inserting first element of pair
+        p[i].second = (i+1); //inserting second element of pair
     }
     set<pairs> s;   //set to sort pair
     set<pairs> :: iterator it; //iterator to manipulate set
@@ -199,7 +223,7 @@ int main(){
 
 
 
------------Number of ways to get 'T' from numbers with power 'power'----
+// -----------Number of ways to get 'T' from sum of numbers with power 'power'----
 int ps(int currSum, int power ,int number, int lim, int t){
     int sum =0;
     currSum += pow(number,power);
@@ -416,6 +440,23 @@ vi int2bin(ll a){
   return v;
 }
 
+
+// =============== " convert number to vector " =============
+
+vi int2vec(ll a){
+  vi v;
+  while(a){
+    v.eb(a%10);
+    a/=10;
+  }
+  reverse(begin(v),end(v));
+
+  return v;
+}
+
+
+
+
 // binary representation of a given number
 void bin(unsigned n) 
 { 
@@ -467,7 +508,13 @@ int knapSack(int W, int wt[], int val[], int n)
     } 
     return -1;
  }
-lower_bound(ALL(v),element);
+
+// alternative trick for binary search
+ 
+auto low = lower_bound(ALL(v),element);
+int pos = low - v.begin();
+
+
 
 ll bsearch(std::vector<tuple<int,int> > &v,ll low, ll high, ll value){
 

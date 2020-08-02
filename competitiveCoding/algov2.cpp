@@ -123,6 +123,72 @@ using namespace std;
 
 	}
 
+// Segment Tree-----
+
+	template<typename T>
+	class SegmentTree{
+  vector<int> tree;     // private  members
+  T size;
+  T vsize;
+  std::vector<int> vv;
+  public:
+
+  SegmentTree(vector<int> v){ 
+      // constructors
+    vsize = (T) v.size();
+    T x = (T) ceil(log2(vsize));
+    vv = v;
+    size = 2*(T)(1<<x)-1;
+    tree.resize(size); // = new T[size];
+
+    cout<<"initialized : size ->"<<v.size()<<"\n";
+    constructTree(0,0,vsize-1); 
+  }
+
+  void constructTree(int node,int start,int end){
+    // node the ptr to the actual values
+    // start and end are the sliding windows for the tree.
+
+    if(start==end) tree[node] = vv[start];
+    else {
+      int mid= (start+end)/2;
+      constructTree(2*node+1, start,mid);
+
+      constructTree(2*node+2, mid+1,end);
+
+      tree[node] = tree[2*node+1] + tree[2*node+2];
+      //  edit the operation that you want to perform within
+
+    }
+  }
+
+  T query(int a,int b){
+    if(a<0 || b>=vsize || a>b) return -1;
+    return rangeQuery(0,vsize-1,a,b,0);
+  }
+
+  T rangeQuery(int l,int r,int limit_l,int limit_r,int node){
+    // l -> range to be slided throughout
+    // r -> range to be slided throughout
+    // limit_l -> user defined fixed query
+    //  limit_r -> user defined limit
+    //  node -> current node
+    if(limit_l <= l && limit_r >= r) return tree[node]; // exactly within the range
+    if(limit_l >r || limit_r <l) return 0; // outside the range
+    int mid = (l+r)/2;
+    return rangeQuery(l,mid,limit_l,limit_r,2*node+1)+
+    rangeQuery(mid+1,r,limit_l,limit_r,2*node+2);
+  }
+
+  void displayTree(){
+    cout<<"segment tree\n";
+    for(auto i:tree){
+      cout<<i<<" ";
+    }
+    cout<<"\n";
+  }};
+
+
 
 // ----------------- Convert array to min difference ---------
 
@@ -255,6 +321,37 @@ void convertMIN(vl &v){
 	  return v;
 	} 
 
+	// ----------- vectors of prime till n ------------
+
+	#define L 1e6
+	std::vector< std::vector <int> > factors(L+1);
+
+
+	void generateFactors(){
+	    for(int i=1; i<=1000;i++){
+	        for(int j =1; j<1e6+1 && i*j <= 1e6; j++){
+	            factors[i*j].eb(i);
+	            if(i!=j)
+	            factors[i*j].eb(j);
+	        }
+	    }
+	}
+	void sorty(){
+	    REP(i,L+1){
+	        sort(ALL(factors[i]));
+	    }
+	}
+
+	void printfactors(){
+	    FOR(i,1e6-20,1e6,1){
+	            cout<<"\n"<<i+1<<"\n";
+	        for(auto j:factors[i+1]){
+	            cout<<j<<" ";
+	        }
+
+	    }
+	}
+
 // power with mod
 	//-------  fast exponention 2k ary method ------------------
 
@@ -282,3 +379,83 @@ void convertMIN(vl &v){
 	{ 
 	    return fact(n) / (fact(r) * fact(n - r)); 
 	} 
+
+// Search map and set
+
+	bool findMap(map<int,int> &c,int p){
+	if(c.find(p) == c.end()) return false;
+	return true;
+	}
+
+	bool findSet(map<pair <int,int> ,int> &c,pair<int,int> p){
+	if(c.find(p) == c.end()) return false;
+	return true;}
+
+// Count number of factors
+
+	ll count_factors(ll a){
+    ll count = 0;
+    if(a==1) return 1;
+    for(int i=1;i*i<=a;i++){
+        if(a%i==0){
+            count++;
+            if(a/i != i) count++;
+        }
+    }
+    return count;
+	}
+
+// Trie 
+	
+	struct Trie
+	{
+	    Trie *children[26];
+	    bool isEnd;
+	};
+
+	Trie *TrieGetNode(){
+	    Trie *node = new Trie;
+	    for (int i = 0; i < 26; ++i)
+	        node->children[i] = NULL;
+	    node -> isEnd = false; 
+	    return node;
+	}
+
+	void TrieInsert(Trie *root, string s){
+	    int ptr =0 ,loc;
+	    for (int i = 0; i < s.length(); ++i)
+	    {   loc = s[i] - 'a';
+	        if(!root->children[loc]) root->children[loc] = TrieGetNode();
+	        root = root->children[loc];
+	    }
+	    root ->isEnd = true;
+	}
+
+
+	bool recursiveSearch(Trie *root,Trie *node,int ptr, string s){
+	    if(ptr == s.length() && node->isEnd ) { return true;}
+	    int loc = s[ptr] - 'a';
+	    if(node->children[loc] != NULL){
+	        if(node->children[loc]->isEnd)
+	            {
+	                return recursiveSearch(root,node->children[loc], ptr+1,s) || recursiveSearch(root,root,ptr+1,s);
+	        }
+	        return recursiveSearch(root,node->children[loc],ptr+1,s);
+	    }
+	    return false;
+
+	}
+
+
+// -------------- Extended euclidean algo -------------------
+	//  ------------- calulating the bezots constants ---------------
+def egcd(a, b):
+    x,y, u,v = 0,1, 1,0
+    while a != 0:
+        q, r = b//a, b%a
+        m, n = x-u*q, y-v*q
+        b,a, x,y, u,v = a,r, u,v, m,n
+    gcd = b
+    return gcd, x, y
+
+print(egcd(102,38))
