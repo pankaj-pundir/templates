@@ -1,54 +1,52 @@
-// ----------------  Array -----------------
+// ---------------- Data Structures-----------------
+
+
+// longest common subseuence problem 
+    int lcs( string &X, string &Y, int m, int n ) 
+    { 
+       int L[m+
 
 
 
-// longest common subseuence problem ---------------------
-int lcs( string &X, string &Y, int m, int n ) 
-{ 
-   int L[m+1][n+1]; 
-   int i, j; 
-   
-   /* Following steps build L[m+1][n+1] in bottom up fashion. Note  
-      that L[i][j] contains length of LCS of X[0..i-1] and Y[0..j-1] */
-   for (i=0; i<=m; i++) 
-   { 
-     for (j=0; j<=n; j++) 
-     { 
-       if (i == 0 || j == 0) 
-         L[i][j] = 0; 
-   
-       else if (X[i-1] == Y[j-1]) 
-         L[i][j] = L[i-1][j-1] + 1; 
-   
-       else
-         L[i][j] = max(L[i-1][j], L[i][j-1]); 
-     } 
-   } 
-     
-   /* L[m][n] contains length of LCS for X[0..n-1] and Y[0..m-1] */
-   return L[m][n]; 
-} 
+        1][n+1]; 
+       int i, j; 
+       
+       /* Following steps build L[m+1][n+1] in bottom up fashion. Note  
+          that L[i][j] contains length of LCS of X[0..i-1] and Y[0..j-1] */
+       for (i=0; i<=m; i++) 
+       { 
+         for (j=0; j<=n; j++) 
+         { 
+           if (i == 0 || j == 0) 
+             L[i][j] = 0; 
+       
+           else if (X[i-1] == Y[j-1]) 
+             L[i][j] = L[i-1][j-1] + 1; 
+       
+           else
+             L[i][j] = max(L[i-1][j], L[i][j-1]); 
+         } 
+       } 
+         
+       /* L[m][n] contains length of LCS for X[0..n-1] and Y[0..m-1] */
+       return L[m][n]; 
+    } 
+
+// comparators 
+    bool sortbysec(const tuple<int, int, int>& a,  
+               const tuple<int, int, int>& b) 
+          { 
+              return (get<1>(a) < get<1>(b)); 
+              // change sign to sort it with decreasing order
+          } 
+
+// Custom Structure
+
+
 
 // ------------- Sort -------------
 
 
-// `Sort by only by second element`;
-
-bool sortbysec(const tuple<int, int, int>& a,  
-               const tuple<int, int, int>& b) 
-{ 
-    return (get<1>(a) < get<1>(b)); 
-    // change sign to sort it with decreasing order
-} 
-sort(v.begin(), v.end(), sortbysec); 
-
-// two elements in increasing order of 2nd element
-
-bool sortbysec(const tuple<int, int>& a,  
-               const tuple<int, int>& b) 
-{ 
-    return (get<1>(a) < get<1>(b)); 
-} 
 
 // sort 1 element ascending order for tie 2nd element in dec order
 
@@ -77,7 +75,7 @@ int i, j, tmp;
      }
      data[j]=tmp;
  }
-
+}
 
 // `bubble sort with template`;
 
@@ -102,3 +100,23 @@ void BubbleSort(T &arr){
 
 
 
+// C++ priority queue with sorting
+
+struct S
+{
+    int m_n1;
+    int m_n2;
+    int m_n3;
+
+    S(int n1, int n2, int n3) : m_n1(n1), m_n2(n2), m_n3(n3)
+    {
+    }
+    bool operator<(const struct S& other) const
+    {
+        //Your priority logic goes here
+        if(m_n1 == other.m_n1) return m_n2 > other.m_n2;
+        return m_n1 < other.m_n1;
+    }
+};
+
+priority_queue<S> pq;
