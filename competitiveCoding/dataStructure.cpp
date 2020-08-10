@@ -19,6 +19,8 @@ multiset<int> s;   //multiple elements allowed
 s.insert(3);
 s.count(3); // check the element is present
 s.find(3);  //return an iterator
+s.clear();
+
 
 // map
 map<string, int> m;
