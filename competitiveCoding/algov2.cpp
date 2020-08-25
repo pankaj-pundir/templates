@@ -321,7 +321,6 @@ void convertMIN(vl &v){
 	  return v;
 	} 
 
-<<<<<<< HEAD
 	// ----------- vectors of prime till n ------------
 
 	#define L 1e6
@@ -352,7 +351,6 @@ void convertMIN(vl &v){
 
 	    }
 	}
-=======
 	// ==== last prime using seives ======
 
 	void LastPrimeSieve()
@@ -374,7 +372,6 @@ void convertMIN(vl &v){
 	    }
 	}
 
->>>>>>> refs/remotes/origin/master
 
 // power with mod
 	//-------  fast exponention 2k ary method ------------------

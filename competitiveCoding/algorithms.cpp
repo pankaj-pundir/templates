@@ -79,9 +79,7 @@ inline double log(ll a,ll b){
 
 
 // ***************************** Code ***********************
-<<<<<<< HEAD:competitiveCoding/algorithms.txt
 
-=======
 struct P
   { int x,y; 
     bool operator<(const & P &p){
@@ -100,8 +98,6 @@ void displayVector(vi var){
       }
       cout<<"\n";
     }
->>>>>>> refs/remotes/origin/master:competitiveCoding/algorithms.cpp
-
 void run(){
     ll n ,maxy =-8;
     cin>>n;
@@ -450,7 +446,6 @@ vi int2bin(ll a){
   return v;
 }
 
-<<<<<<< HEAD:competitiveCoding/algorithms.txt
 
 // =============== " convert number to vector " =============
 
@@ -466,17 +461,12 @@ vi int2vec(ll a){
 }
 
 
-
-
-=======
 int bin2int(std::vector<int> v){
   int num = 0;
   for (int i = 0; i < v.size(); ++i)
     num += v[i]+num*10;
   return num;
 }
-
->>>>>>> refs/remotes/origin/master:competitiveCoding/algorithms.cpp
 // binary representation of a given number
 void bin(unsigned n) 
 { 
