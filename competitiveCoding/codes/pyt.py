@@ -1,27 +1,59 @@
-MOD = 10**9+7
+# Uses python3
+import sys
+import random
 
-def fac(a):
-    ans = 1
-    for i in range(1,a+1):
-        ans = (ans*i)%MOD
-    return ans
+# def partition3(a, l, r):
+#     x = a[l]
+#     j = l
+#     for i in range(l + 1, r + 1):
+#         if a[i] <= x:
+#             j += 1
+#             a[i], a[j] = a[j], a[i]
+#     a[l], a[j] = a[j], a[l]
+#     k = j
 
-def modInv(a):
-    return pow(a,MOD-2,MOD)
-def comb(a,b):
-    return fac(a)*modInv(fac(b)*fac(a-b)%MOD)%MOD
-
-def soln():
-    n = int(input())
-    # n,m = map(int,input().split())
-    # li = []
-
-    m = (n-2)*(n-1)
-    kk = comb(n,n-3)
-    print(m*kk % MOD)
-    return 
-    # k = n-2
+#     left = j
+#     right = r
+#     while left <= right:
+#         mid = (left+right)//2
+#         if a[mid] == a[j]:
 
 
-# for i in range(int(input())):
-soln()
+
+#     while a[j] == a[k]:
+#         k+=1
+#         if k >=r:
+#             break
+#     return (j,k-1)
+
+
+def partition2(a, l, r):
+    x = a[l]
+    j = l
+    for i in range(l + 1, r + 1):
+        if a[i] <= x:
+            j += 1
+            a[i], a[j] = a[j], a[i]
+    a[l], a[j] = a[j], a[l]
+    return j
+
+
+def randomized_quick_sort(a, l, r):
+    if l >= r:
+        return
+    k = random.randint(l, r)
+    a[l], a[k] = a[k], a[l]
+    #use partition3
+    # m = partition2(a, l, r)
+    m,n = partition3(a, l, r)
+    randomized_quick_sort(a, l, m - 1);
+    randomized_quick_sort(a, n + 1, r);
+
+
+if __name__ == '__main__':
+    input = sys.stdin.read()
+    n, *a = list(map(int, input.split()))
+    # randomized_quick_sort(a, 0, n - 1)
+    a.sort()
+    for x in a:
+        print(x, end=' ')
