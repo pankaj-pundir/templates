@@ -1,59 +1,59 @@
-# Uses python3
-import sys
-import random
+def gcd(a,b):
+    if a == 0:
+        return b
+    return gcd(b % a, a)
+ 
+# Function to return LCM of two numbers
+def lcm(a,b):
+    return (a *b)/ gcd(a,b)
 
-# def partition3(a, l, r):
-#     x = a[l]
-#     j = l
-#     for i in range(l + 1, r + 1):
-#         if a[i] <= x:
-#             j += 1
-#             a[i], a[j] = a[j], a[i]
-#     a[l], a[j] = a[j], a[l]
-#     k = j
+def check(s1,s2):
+    mini = min(len(s1),len(s2))
+    for i in range(mini):
+        if s1[i] != s2[i]:
+            return "-1"
+    long_s,short_s = (s1,s2) if len(s1) >= len(s2) else (s2,s1)
+    set_l = set(long_s)
+    set_s = set(short_s)
+    # print("set = ",set_l,set_s)
+    # if len(long_s)%len(short_s) != 0 and (len(set_s)==2 or len(set_l)==2) :
+    #     return "-1"
+    pos1,pos2 = 0,0
+    # print(long_s,short_s)
+    count = 0
 
-#     left = j
-#     right = r
-#     while left <= right:
-#         mid = (left+right)//2
-#         if a[mid] == a[j]:
+    while True:
+        if long_s[pos1] != short_s[pos2]:
+            return "-1"
+        else:
+            pos1 = (pos1+1)%len(long_s)
+            if pos2 == 0:
+                count += 1
+            pos2 = (pos2+1)%len(short_s)
 
+        if pos1 == pos2 == 0:
+            return short_s*count
 
+    # for i in range(mini,len(long_s)):
+    #     if long_s[i] != short_s[pos]:
+    #         return "-1"
+    #     if pos ==0:
+    #         count+=1
+    #     pos +=1
+    #     pos = pos% mini
+    # # print(int(lcm(mini,len(long_s))))
+    # if (len(set_s)==1 and len(set_l)==1):
+    #     return short_s*int(lcm(mini,len(long_s))/mini)
+    # return short_s*count
 
-#     while a[j] == a[k]:
-#         k+=1
-#         if k >=r:
-#             break
-#     return (j,k-1)
-
-
-def partition2(a, l, r):
-    x = a[l]
-    j = l
-    for i in range(l + 1, r + 1):
-        if a[i] <= x:
-            j += 1
-            a[i], a[j] = a[j], a[i]
-    a[l], a[j] = a[j], a[l]
-    return j
-
-
-def randomized_quick_sort(a, l, r):
-    if l >= r:
-        return
-    k = random.randint(l, r)
-    a[l], a[k] = a[k], a[l]
-    #use partition3
-    # m = partition2(a, l, r)
-    m,n = partition3(a, l, r)
-    randomized_quick_sort(a, l, m - 1);
-    randomized_quick_sort(a, n + 1, r);
+def gen():
+    s1 = input()
+    s2 = input()
+    return check(s1,s2)
+        
 
 
-if __name__ == '__main__':
-    input = sys.stdin.read()
-    n, *a = list(map(int, input.split()))
-    # randomized_quick_sort(a, 0, n - 1)
-    a.sort()
-    for x in a:
-        print(x, end=' ')
+
+
+for _ in range(int(input())):
+    print(gen())

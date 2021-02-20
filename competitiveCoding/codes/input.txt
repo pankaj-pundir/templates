@@ -1,2 +1,9 @@
-5 1 5 8 12 13 
-5 8 1 23 1 11
+4
+baba
+ba
+aa
+aaa
+ababab
+abab
+ab
+ba

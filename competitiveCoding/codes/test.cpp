@@ -49,26 +49,48 @@ void modif(vector<int> &v,int maxy){
     }
 }
 
-vector<int> solve(){
+ll solve(){
     ll n,k;
-    cin>>n>>k; 
+    cin>>n; 
     vector<int> v(n);
-    for(auto &i: v) cin>>i;
 
-    while(k--){
-        modif(v,giveMax(v));
-        if(allPos(v)){
-            // cout<<"all pos\n";
-            if(k&1){
-                modif(v,giveMax(v));
-                return v;
-            }
-            else return v;
+    for(auto &i: v) cin>>i;
+    // cout<<"val is "<<n;
+    if (n<=3) {
+        return 0; 
+    }
+    vector<int> ans(n-2,0);
+    
+    int count = 0;
+    bool harsh = false;
+    for(int i =0;i < n-2; i++){
+        if (v[i+1] > v[i] && v[i+1] > v[i+2]) {
+            if(v[i]==v[i+2]) harsh = true;
+            ans[i] =1; 
+            count++;
+        }
+        else if(v[i+1] < v[i] && v[i+1] < v[i+2]){
+            if(v[i]==v[i+2]) harsh = true;
+            ans[i] = -1; 
+            count++;
         }
         
-        // k--;
+    } 
+    displayVector(ans);
+ 
+    int maxSub = 1;
+
+    for(int i =0;i < n-3; i++){
+        if(ans[i] == -ans[i+1]) {
+            maxSub = max(maxSub,2);
+            
+        }
+        if(i<n-4 && (v[i+1] == v[i+3])){
+            maxSub = max(maxSub,3);
+        }
     }
-    return v;
+
+    return max(count-maxSub,0);
 
 }
 
@@ -76,10 +98,7 @@ int main(){
     int t,n;
     cin>>t;
     while(t--){
-        vector<int> vv = solve();
-        for(auto i: vv){
-            cout<<i<<" ";
-        }
+    cout<<solve();
         cout<<"\n";
     }
 }
