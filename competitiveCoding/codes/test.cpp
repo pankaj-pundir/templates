@@ -1,21 +1,25 @@
 #include<bits/stdc++.h>
-using namespace std;
 
-#define MOD 1000000007
+using namespace std;
 typedef long long ll;
 
-ll BinPow(ll a,ll b,ll m){
-    ll ans = 1;
-    while(b){
-        if(b & 1)ans = ans *1ll* a % m;
-        a = a *1ll* a % m;
-        b >>= 1;
-    }
+vector<ll> prefixArray(vector<ll> arr){
+    vector<ll> ans(arr.size(),0);
+    ans[0] = arr[0];
+    for(int i = 1; i < arr.size(); i++)
+        ans[i] = arr[i]+ans[i-1];
     return ans;
-	}
+}
 
-void displayVector(vector<int> var){
-      cout<<"\n output \n";
+// template<typename T,typename... types>
+//   void print(const T& a,const types& ... args){
+//     cout<<a<<",";
+//     print(args...);
+//       }
+
+template<typename T,typename T1>
+void displayVector(vector<T> var,T1 s){
+      cout<<"\n "<<s<<" \n";
       for (auto a: var)
       {
         cout<<a<<" ";
@@ -23,82 +27,41 @@ void displayVector(vector<int> var){
       cout<<"\n";
     }
 
-bool allPos(vector<int> &v){
-    int mini = INT_MAX;
-    for(auto i:v){
-        if(i<0)
-        return false;
-        mini = min(mini,i);
-    }
-    if(mini == 0)   
-        return true;
-    return false;
-}
-
-int giveMax(vector<int> &v){
-    int maxy = INT_MIN;
-    for(auto i:v){
-        maxy = max(maxy,i);
-    }
-    return maxy;
-}
-
-void modif(vector<int> &v,int maxy){
-    for(auto &i:v){
-        i = maxy - i;
-    }
-}
-
-ll solve(){
-    ll n,k;
-    cin>>n; 
-    vector<int> v(n);
-
-    for(auto &i: v) cin>>i;
-    // cout<<"val is "<<n;
-    if (n<=3) {
-        return 0; 
-    }
-    vector<int> ans(n-2,0);
+ll run(){
+    ll n;
+    cin>>n;
+    vector<ll> v(n);
+    for( auto &i:v) cin>>i;
     
-    int count = 0;
-    bool harsh = false;
-    for(int i =0;i < n-2; i++){
-        if (v[i+1] > v[i] && v[i+1] > v[i+2]) {
-            if(v[i]==v[i+2]) harsh = true;
-            ans[i] =1; 
-            count++;
-        }
-        else if(v[i+1] < v[i] && v[i+1] < v[i+2]){
-            if(v[i]==v[i+2]) harsh = true;
-            ans[i] = -1; 
-            count++;
-        }
-        
-    } 
-    displayVector(ans);
- 
-    int maxSub = 1;
+    ll mini[2] = {v[0],v[1]};
+    ll cnt[2] = {1,1};
+    ll sumy = v[0]+v[1];
 
-    for(int i =0;i < n-3; i++){
-        if(ans[i] == -ans[i+1]) {
-            maxSub = max(maxSub,2);
-            
-        }
-        if(i<n-4 && (v[i+1] == v[i+3])){
-            maxSub = max(maxSub,3);
-        }
+    ll  minVal = sumy + mini[0]*(n-cnt[0])+mini[1]*(n-cnt[1]);
+
+    for(int i=2; i<n; i++){
+        sumy+=v[i];
+        mini[i%2] = min(mini[i%2],v[i]);
+        cnt[i%2]++;
+
+    ll temp= sumy + mini[0]*(n-cnt[0])+mini[1]*(n-cnt[1]);
+    minVal = min(temp,minVal);
+
     }
-
-    return max(count-maxSub,0);
-
+    return minVal;
+    
 }
 
 int main(){
-    int t,n;
-    cin>>t;
-    while(t--){
-    cout<<solve();
-        cout<<"\n";
-    }
+    int n ;
+    cout<<2e7;
+    // cin>>n;
+    // while(n--){
+    //     cout<<run();
+    //     // vector<ll> vans= run();
+    //     // for(int i = 0; i < vans.size(); i++)
+    //     //     cout<<vans[i]<<" ";
+    //     cout<<"\n";
+    // }
+
 }

@@ -20,7 +20,7 @@
 // impo functions
 #define sumofdigits(sum,num) int sum = 0; while (n != 0) { sum = sum + n % 10; n = n/10; }
 #define int2str(str,n) n=boost::lexical_cast<int>(str);
-#define fastio ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+#define fastio ios_base::sync_with_stdio(false);cin.tie(NULL);
 // debugging 
 #define debug1(x) cerr<<#x<<" = "<<x<<"\n"
 #define debug2(a,b) cout<<a<<" "<<b<<endl;
@@ -82,22 +82,24 @@ inline double log(ll a,ll b){
 
 struct P
   { int x,y; 
-    bool operator<(const & P &p){
+    bool operator<(const &p){
       if (x != p.x) return x < p.x; // sort by sec
       else return y < p.y;  //sort by sec
     } 
     
   };
 
-
-void displayVector(vi var){
-      cout<<"\n output \n";
+template<typename T,typename T1>
+void displayVector(vector<T> var,T1 s){
+      cout<<"\n "<<s<<" \n";
       for (auto a: var)
       {
         cout<<a<<" ";
       }
       cout<<"\n";
     }
+
+    
 void run(){
     ll n ,maxy =-8;
     cin>>n;
@@ -131,6 +133,17 @@ for (int i = 0; i < n; ++i) cin>>v[i];
   const auto prev_round = std::fegetround();
   std::fesetround(FE_DOWNWARD);
   cout<<setprecision(6)<<fixed<<val<<el;
+
+// prefix sum
+
+vector<ll> prefixArray(vector<ll> arr){
+    vector<ll> ans(arr.size(),0);
+    ans[0] = arr[0];
+    for(int i = 1; i < arr.size(); i++)
+        ans[i] = arr[i]+ans[i-1];
+    return ans;
+}
+
 
 // --------------------time a fucntion ---------------------
 
