@@ -9,13 +9,9 @@
 #define S second
 #define ALL(x) (x).begin(), (x).end()
 #define FOR(i,a,b,c) for (int i = a; i < b; i+=c)
-#define MAT(v,row,col) vector<vi> > v(row,vi (col,0)); // doubtful
+#define MAT(v,row,col) vector<vi> v(row,vi (col,0)); // doubtful
 // modular exponentiation
 #define modexp ll power(ll x, ll y, ll p){ int res = 1; x = x % p; while(y>0){ if(y&1) res = (res*x) % p; y = y>>1; x = (x*x) % p; } return res; }
-// 2D matrix
-#define v2(dp,r,value) vector<std::vector<int> > dp(r,std::vector<int> (r,value))
-
-#define tr(c,i) for(typeof(c).begin() i = (c).begin(); i != (c).end(); i++)
 
 // impo functions
 #define sumofdigits(sum,num) int sum = 0; while (n != 0) { sum = sum + n % 10; n = n/10; }
@@ -500,12 +496,12 @@ void bin(unsigned n)
     int high = n - 1;
     while(low<=high){
     {
-      int mid = (low + high)/2;
+      int mid = low + (high - low)/2;
       if (a[mid] == item) return mid;
       else if (a[mid] < item) low = mid + 1;
       else high = mid - 1;
     } 
-    return -1;
+    return left;
  }
 
 // alternative trick for binary search
