@@ -86,79 +86,21 @@ void displayVector(vector<T> var,T1 s){
       cout<<"\n";
     }
 
-int generate_vector(vll &arr,bool startEven){
-	//  two pointer method
-	int left=0,right=0;
-	int count =0 ;
-	int L = arr.size();
-	// startEven index and value parity to be same
-	while(left < L ){
-
-		if( ( (arr[left] & 1) == (left & 1) ) != startEven){
-			right = max(right,left+1);
-			// cout<<"left -> "<<left<<" right -> "<<right<<"\n";
-			while(right < L ){
-				if(  (arr[right] & 1) == (arr[left]&1) ){
-					right++;
-				}
-				else{
-					//  swap
-					// cout<<"doing swap";
-					// debug2(left,right);
-					int temp = arr[right];
-					arr[right] = arr[left];
-					arr[left] = temp;
-					count += (right-left);
-					break;
-				}
-			}
-			
-		}
-		left++;
-		// displayVector<ll,string> (arr,"inner");
-		// debug2(left,right);
-	}
-	return count;
-}
     
-int run(){
-    ll n ,maxy =-8;
-    cin>>n;
-    vll v(n);
-    REP(i,n) cin>>v[i];
-	int odd=0,even=0;
-	REP(i,n){
-		if(v[i]&1) odd++;
-		else even++;
-		v[i] = v[i]%2;
-	}
-	if (abs(odd-even) > 1) return -1;
+ll run(){
+    ll n ,k,maxy =-8;
+    cin>>n>>k;
+    vi v(n,0);
+	 REP(i,n) cin>>v[i];
+   if(n<=k) return n;
+   sort(ALL(v));
+   int count = 0;
+   for(int i = n-k-1;i>=0;i--){
+     if(v[i] == v[k]) count++;
+   }
 
-	
-	//  start with odd
-	vll v_odd(ALL(v));
-	vll v_even(ALL(v));
-
-	int val_odd = 1e9+17;
-	int val_even = 1e9+17;
-	// cout<<"check\n";
-	// debug2(odd,even);
-	if(odd==even){
-
-	val_odd = generate_vector(v_odd,false);
-	val_even = generate_vector(v_even,true);
-	// debug2(val_odd,val_even);
-	}
-	else if (odd > even){
-		 val_odd = generate_vector(v_odd,false);
-	}
-	else {
-		 val_even = generate_vector(v_even,true);
-	}
-	// displayVector<ll,string>(v_even,"start");
-	// val_even = generate_vector(v_even,true);
-	// displayVector<ll,string>(v_even,"end");
-	return min(val_odd,val_even);      
+	return k+count;
+	  
 }
 
 int main()

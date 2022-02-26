@@ -1,17 +1,7 @@
-2
-FBHC
+3
+1
+10
 4
-FB
-BF
-HC
-CH
-FOXEN
-8
-NI
-OE
-NX
-EW
-OI
-FE
-FN
-XW
+3 2 1 2
+5
+1 1 1 0 2

@@ -1,36 +1,19 @@
-N = 30000+5
-xor = 0
-dp = []
-dp.append(0)
-for i in range(N):
-    xor = xor ^ i
-    dp.append(xor)
-    # if i < 30:
-    #     print(i+1,xor)
+# def solve(arr,k):
+#     arr = sorted(arr)
 
-for i in range(int(input())):
-    a,b = map(int,input().split())
-    # print(a,b,end=" -> ")
-    if a == 1:
-        if b ==0 :
-            print(1)
-            continue
-        if  b==1:
-            print(3)
-        else:
-            print(2)
-        continue
+#     for i in arr:
+#         if i >= k:
+#             return "NO"
 
-    count = a+1
-    # print("exp",a,dp[a])
-    if b == dp[a]:
-        count = a
-    elif dp[a] == 0 and a != b:
-        count = a+1
-
-    elif dp[a]==0 and a == b:
-        count = a+2
-
-    print(count)
-
+for _ in range(int(input())):
+    h,v = map(int,input().split())
+    if h==v:
+        ans = "10"*(h+1)
+    elif h < v:
+        ans = "10"*(h+1)+"1"+"101"*(max(abs(h-v)-1,0))
+    else:
+        ans = "01"*(v+1)+"0"+"010"*(max(abs(h-v)-1,0))
+    print(len(ans))
+    print(ans)
+        
     
