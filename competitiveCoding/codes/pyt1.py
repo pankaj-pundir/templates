@@ -1,19 +1,37 @@
-# def solve(arr,k):
-#     arr = sorted(arr)
-
-#     for i in arr:
-#         if i >= k:
-#             return "NO"
 
 for _ in range(int(input())):
-    h,v = map(int,input().split())
-    if h==v:
-        ans = "10"*(h+1)
-    elif h < v:
-        ans = "10"*(h+1)+"1"+"101"*(max(abs(h-v)-1,0))
-    else:
-        ans = "01"*(v+1)+"0"+"010"*(max(abs(h-v)-1,0))
-    print(len(ans))
-    print(ans)
-        
+    n = int(input())
+    arr = list(map(int, input().split()))
+    ans = 0
+    miny = arr[0]
+    # 2 1
+    # downward trend
+    down_trend_idx = 0
+    for i in range(n-1):
+        if  arr[i] - arr[i+1]  > 0:
+            down_trend_idx +=1
+            miny = min(arr[i+1],miny)
+        else:
+            break
+    # print(f"down_trend_idx {down_trend_idx}")
+    if down_trend_idx == n-2:
+        if arr[down_trend_idx+1] - arr[down_trend_idx] > 0:
+            ans +=1
+        # print(f"down_trend_ from here ")
+        print(ans)
+        continue
     
+    # print(f"minu {miny}")
+    if down_trend_idx == n-1:
+        print(0)
+        # print(f"down_trend_ from here 32324 ")
+        continue
+
+    ans +=1
+    for i in range(down_trend_idx+1,n-1):
+        if  arr[i] - arr[i+1]  > 0 and arr[i+1]>miny:
+            ans +=1
+        else:
+            break
+    print(ans)
+    continue
