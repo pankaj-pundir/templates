@@ -1,132 +1,131 @@
-// C++ initail code
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <limits>
 
-#include<bits/stdc++.h>
-#define REP(i,b) for (int i = 0; i < b; i++)
-#define mt make_tuple
-#define eb emplace_back
-#define el endl // to display output at right place
-#define F first
-#define S second
-#define ALL(x) (x).begin(), (x).end()
-#define FOR(i,a,b,c) for (int i = a; i < b; i+=c)
-#define MAT(v,row,col) vector<vi> v(row,vi (col,0)); // doubtful
-// modular exponentiation
-#define modexp ll power(ll x, ll y, ll p){ int res = 1; x = x % p; while(y>0){ if(y&1) res = (res*x) % p; y = y>>1; x = (x*x) % p; } return res; }
-
-// impo functions
-#define sumofdigits(sum,num) int sum = 0; while (n != 0) { sum = sum + n % 10; n = n/10; }
-#define int2str(str,n) n=boost::lexical_cast<int>(str);
-#define fastio ios_base::sync_with_stdio(false);cin.tie(NULL);
-// debugging 
-#define debug1(x) cerr<<#x<<" = "<<x<<"\n"
-#define debug2(a,b) cout<<a<<" "<<b<<endl;
-#define debug3(a,b,c) cout<<a<<" "<<b<<" "<<c<<"\n";
-
-
-#define MOD 1000007
 using namespace std;
 
-typedef long long ll; 
-typedef pair<int, int> pii; 
-typedef vector<pii> vpii;
-typedef vector<int> vi;
-typedef vector<ll> vll;
+const int INF = numeric_limits<int>::max();
 
-// try to read it in a normal conventions
+class Dijkstra {
+private:
+    int V; // Number of vertices
+    vector<vector<pair<int, int>>> adj; // Adjacency list (vertex, weight)
+    vector<int> dist; // Stores minimum distances from the source node
+    int INF = numeric_limits<int>::max();
 
-// ***************************  Templates *****************
-
-  // sum the numbers
-  template<class T>
-      auto sum(T a) {return a;}
-  template<typename T, typename... Args>
-  auto sum(T a, Args... args) { return a + sum(args...); }
-
-  // display all the content 
-  template<class T>
-  void print(T a){
-      cout<<a<<"\n";
-      }
-  template<typename T,typename... types>
-  void print(const T& a,const types& ... args){
-    cout<<a<<",";
-    print(args...);
-      }
-
-  // vector print template
-
-  template<typename T1,typename T2>ostream& operator<<(ostream& os,pair<T1,T2> ptt){
-      os<<ptt.first<<","<<ptt.second;
-      return os;
-      }
-
-
-  template<typename T>ostream& operator<<(ostream& os,vector<T> vt){
-  os<<"{";    for(auto i:vt)
-          os<<i<<","; os<<"}"; return os;
-  }
-
-
-// ******************* useful functions *******************
-
-inline double log(ll a,ll b){
-    return log10(a)/log10(b);
-}
-
-
-// ***************************** Code ***********************
-
-template<typename T,typename T1>
-void displayVector(vector<T> var,T1 s){
-      cout<<"\n "<<s<<" \n";
-      for (auto a: var)
-      {
-        cout<<a<<" ";
-      }
-      cout<<"\n";
+public:
+    int getMaxLimit(){
+        return INF;
     }
 
-    
-ll run(){
-    ll n ,k,maxy =-8;
-    cin>>n>>k;
-    vi v(n,0);
-	 REP(i,n) cin>>v[i];
-   if(n<=k) return n;
-   sort(ALL(v));
-   int count = 0;
-   for(int i = n-k-1;i>=0;i--){
-     if(v[i] == v[k]) count++;
-   }
+    Dijkstra(int vertices) : V(vertices) {
+        adj.resize(V);
+        dist.resize(V, INF);
+    }
 
-	return k+count;
-	  
+    void addEdge(int u, int v, int weight) {
+        adj[u].push_back({v, weight});
+        adj[v].push_back({u, weight}); // For an undirected graph
+    }
+
+    void dijkstra(int start) {
+        dist[start] = 0;
+        vector<int> parent(V, -1);
+
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+        pq.push({0, start});
+
+        while (!pq.empty()) {
+            int u = pq.top().second;
+            pq.pop();
+
+            for (const auto& neighbor : adj[u]) {
+                int v = neighbor.first;
+                int weight = neighbor.second;
+
+                if (dist[v] > dist[u] + weight) {
+                    dist[v] = dist[u] + weight;
+                    parent[v] = u;
+                    pq.push({dist[v], v});
+                }
+            }
+        }
+    }
+
+    int getMinDistance(int source, int target) {
+        return dist[target];
+    }
+
+    vector<vector<int>> getShortestPaths(int start, const vector<int>& parent) {
+        vector<vector<int>> paths(V);
+
+        for (int i = 0; i < V; ++i) {
+            if (i == start)
+                continue;
+
+            vector<int> path;
+            int current = i;
+
+            while (current != -1) {
+                path.push_back(current);
+                current = parent[current];
+            }
+
+            reverse(path.begin(), path.end());
+            paths[i] = path;
+        }
+
+        return paths;
+    }
+
+    void printPath(int start, int v, const vector<int>& parent) {
+        if (v == start) {
+            cout << v;
+            return;
+        }
+
+        printPath(start, parent[v], parent);
+        cout << " -> " << v;
+    }
+};
+
+int main() {
+    int V, E; // Number of vertices and edges
+    // cout << "Enter the number of vertices: ";
+    cin >> V>>E;
+    // cout << "Enter the number of edges: ";
+    // cin >> E;
+
+    Dijkstra graph(V);
+
+    // cout << "Enter edges (source, destination, weight):\n";
+    for (int i = 0; i < E; ++i) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        // cout<<u<<v<<w<<"\n";
+        graph.addEdge(u, v, w);
+    }
+
+    int startVertex;
+    // cout << "Enter the starting vertex: ";
+    cin >> startVertex;
+    // cout<<"startVertex: "<<startVertex<<'\n';
+
+    graph.dijkstra(startVertex);
+
+    int targetVertex;
+    cout << "Enter the target vertex to find minimum distance: ";
+    cin >> targetVertex;
+    // cout<<"target Vertex: "<<targetVertex<<'\n';
+
+    int minDistance = graph.getMinDistance(startVertex, targetVertex);
+
+    if (minDistance == graph.getMaxLimit()) {
+        cout << "No path exists from " << startVertex << " to " << targetVertex << endl;
+    } else {
+        cout << "Minimum distance from " << startVertex << " to " << targetVertex << " is: " << minDistance << endl;
+    }
+
+    return 0;
 }
-
-int main()
-{	
-    fastio
-
-    int t =1;
-	cin>>t;
-
-	while(t--){
-		// cout<<"\n###############################\n";
-    cout<<run()<<"\n";
-  	}
-	return 0;
-}
-
-
-
-// 5
-// 3
-// 6 6 1
-// 1
-// 9
-// 6
-// 1 1 1 2 2 2
-// 2
-// 8 6
-// 6
-// 6 2 3 4 5 1

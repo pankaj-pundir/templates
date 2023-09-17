@@ -1,44 +1,11 @@
 #include <iostream>
 #include <set>
 #include <vector>
+
 using namespace std;
 typedef long long ll;
 
-template <typename T>
-class Edge
-{
-private:
-    T node1, node2, weight;
-
-public:
-    T getNode1()
-    {
-        return node1;
-    }
-
-    T getNode2()
-    {
-        return node2;
-    }
-
-    T getWeight()
-    {
-        return weight;
-    }
-
-    Edge(T node1, T node2, T weight)
-    {
-        this->node1 = node1;
-        this->node2 = node2;
-        this->weight = weight;
-    }
-
-    void printData()
-    {
-        cout << "Node1: " << this->node1 << " Node2: " << this->node2 << " Weight: " << this->weight << endl;
-    }
-};
-
+// ========================= Disjoint Set ========================================
 template <typename T>
 struct DisjointSet
 {
@@ -87,25 +54,42 @@ struct DisjointSet
     }
 };
 
-int edit_distance(vector<int> &a, vector<int> &b)
-{
-    return abs(a[0] - b[0]) + abs(a[1] - b[1]);
-}
+// =========================== KRUSHKAL'S ALGORITHM ======================================
 
-vector<Edge<ll>> createDenseGraph(vector<vector<int>> &points)
+template <typename T>
+class Edge
 {
-    int size = points.size();
-    vector<Edge<ll>> graph;
+private:
+    T node1, node2, weight;
 
-    for (int i = 0; i < size - 1; i++)
+public:
+    T getNode1()
     {
-        for (int j = i + 1; j < size; j++)
-        {
-            graph.push_back(Edge<ll>((ll)i, (ll)j, (ll)edit_distance(points[j], points[i])));
-        }
+        return node1;
     }
-    return graph;
-}
+
+    T getNode2()
+    {
+        return node2;
+    }
+
+    T getWeight()
+    {
+        return weight;
+    }
+
+    Edge(T node1, T node2, T weight)
+    {
+        this->node1 = node1;
+        this->node2 = node2;
+        this->weight = weight;
+    }
+
+    void printData()
+    {
+        cout << "Node1: " << this->node1 << " Node2: " << this->node2 << " Weight: " << this->weight << endl;
+    }
+};
 
 vector<Edge<ll>> krushkal(vector<Edge<ll>> &graph)
 {
@@ -130,27 +114,4 @@ vector<Edge<ll>> krushkal(vector<Edge<ll>> &graph)
     }
 
     return result;
-}
-
-int main()
-{
-    int n, a, b;
-    cin >> n;
-
-    vector<vector<int>> points(n);
-
-    for (int i = 0; i < n; i++)
-    {
-        cin >> a >> b;
-        points[i].push_back(a);
-        points[i].push_back(b);
-    }
-
-    // for (int i=0; i<n; i++){
-    //     cout<<points[i][0]<<" "<<points[i][1]<<"\n";
-    // }
-
-    auto denseGraph = createDenseGraph(points);
-
-    auto res = krushkal(denseGraph);
 }
