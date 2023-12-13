@@ -75,6 +75,7 @@
         "valarray": "cpp",
         "variant": "cpp",
         "__locale": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "ios": "cpp"
     }
 }

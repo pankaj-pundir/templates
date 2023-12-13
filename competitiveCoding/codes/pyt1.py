@@ -1,97 +1,122 @@
-def mod_inverse(a, m):
-    # Calculate the modular inverse of a modulo m using the extended Euclidean algorithm.
-    g, x, y = extended_gcd(a, m)
-    if g != 1:
-        raise ValueError("The modular inverse does not exist.")
-    else:
-        return x % m
+def prime_factors(n):
+    factors = []
+    divisor = 2
 
-def extended_gcd(a, b):
-    if a == 0:
-        return (b, 0, 1)
-    else:
-        g, x, y = extended_gcd(b % a, a)
-        return (g, y - (b // a) * x, x)
+    while divisor <= n:
+        if n % divisor == 0:
+            factors.append(divisor)
+            n //= divisor
+        else:
+            divisor += 1
+
+    return factors
 
 
-class DisjointSet:
-    def __init__(self, n):
-        self.parent = [i for i in range(n)]
-        self.rank = [0] * n
+import math
 
-    def find(self, x):
-        if self.parent[x] != x:
-            self.parent[x] = self.find(self.parent[x])
-        return self.parent[x]
+def sieve_eratosthenes(limit):
+    sieve = [True] * (limit + 1)
+    sieve[0] = sieve[1] = False
+    primes = []
 
-    def union(self, x, y):
-        root_x = self.find(x)
-        root_y = self.find(y)
+    for current in range(2, int(math.sqrt(limit)) + 1):
+        if sieve[current]:
+            primes.append(current)
+            for multiple in range(current * current, limit + 1, current):
+                sieve[multiple] = False
 
-        if root_x != root_y:
-            if self.rank[root_x] < self.rank[root_y]:
-                self.parent[root_x] = root_y
-            elif self.rank[root_x] > self.rank[root_y]:
-                self.parent[root_y] = root_x
-            else:
-                self.parent[root_y] = root_x
-                self.rank[root_x] += 1
+    for candidate in range(int(math.sqrt(limit)) + 1, limit + 1):
+        if sieve[candidate]:
+            primes.append(candidate)
 
-n,q = map(int,input().split())
-cost = list(map(int,input().split()))
+    return primes
 
-ds = DisjointSet(n)
-for i in range(q):
-    a, b = map(int,input().split())
-    # print(a,b)
-    ds.union(a-1, b-1)
+def prime_factors_with_precomputed_primes(n, primes):
+    factors = []
+    for prime in primes:
+        while n % prime == 0:
+            factors.append(prime)
+            n //= prime
+        if n == 1:
+            break
 
-# print(ds.parent)
-count_map = {}
+    if n > 1:
+        factors.append(n)
 
-for i in ds.parent:
-    count_map[i] = count_map.get(i,0)+1
-total_mul = 1
+    return factors
 
-# print(count_map)
+# Precompute prime numbers up to a suitable limit (adjust as needed)
+primes = sieve_eratosthenes(10000)
 
-for k in count_map:
-    total_mul *= count_map[k]
-
-ans = 0
-modulus = 998244353
-
-for ind,val in enumerate(cost): 
-    ans += (val*(total_mul//count_map[ds.parent[ind]]) % modulus)
-    # print(val,count_map[ds.parent[ind]],ind)
-
-# print(ans)
-# print(total_mul)
-# # Example usage:
-# n = 5  # Number of elements
+# Example usage:
+# num = 56
+# prime_factors = prime_factors_with_precomputed_primes(num, primes)
+# print(f"Prime factors of {num}: {prime_factors}")
 
 
-# # Initially, each element is in its own set
-# # ds.parent = [0, 1, 2, 3, 4]
+# def select_factors(factors):
+#     ans = []
+#     sumy = 0
+#     for i in range(len(factors)):
+#         if factors[i] >
 
-#  # Union elements 0 and 1
-# ds.union(2, 3)  # Union elements 2 and 3
+def minimize_arr(factors,ones):
+    total_removed_ones = -1
+    pos = None
+    for i in range(len(factors)):
+        for j in range(len(factors)-1,i,-1):  
+            if factors[i]*factors[j] - factors[i]-factors[j] > (41 - sum(factors)):
+                # print(f" breaking {i} {j} ")
+                continue
 
-# # After unions, ds.parent will be modified accordingly:
-# # ds.parent = [0, 0, 2, 2, 4]
+            removed_ones = factors[i]*factors[j] - factors[i]-factors[j]
+            if removed_ones > total_removed_ones:
+                # print(f" setting {i} {j} ")
+                total_removed_ones = factors[i]*factors[j] - factors[i]-factors[j]
+                pos = (i,j)
+    if pos == None:
+        return factors
+    mul = factors[pos[0]]*factors[pos[1]]
+    factors.append(mul)
+    factors.pop(pos[1])
+    factors.pop(pos[0])
 
-# # Check if two elements are in the same set
-# print(ds.find(0) == ds.find(1))  # True
-# print(ds.find(1) == ds.find(2))  # False
-# print(ds.find(2) == ds.find(3))  # True
-# print(ds.find(3) == ds.find(4))  # False
+    return sorted(factors)
+
+# arr = [2, 2, 2, 9,26]
+
+# res = minimize_arr(arr,0)
+# print(res)
+
+def run():
+    n = int(input())
+    factors = prime_factors_with_precomputed_primes(n,primes=primes)
+    # factors = select_factors(factors=factors[::-1])
+    sumy = sum(factors) 
+    if sumy > 41:
+        return -1
+    if sumy == 41 and len(factors) <=100:
+        return f"{len(factors)} {' '.join(list(map(str,factors)))}"
+    
+    req_ones = 41 - sumy
+    # print(factors,req_ones)
+    while True:
+        factors_temp = minimize_arr([i for i in factors],req_ones)
+        # print(factors,factors_temp,req_ones)
+        if factors_temp == factors:
+            break
+        factors = factors_temp
+        req_ones = 41 - sum(factors)
+    # factors = minimize_arr(factors,req_ones) 
+    # print(factors)
+    
+
+    req_ones = 41 - sum(factors) 
+    if len(factors)+req_ones > 100:
+        return -1
+    return f"{len(factors)+req_ones} {' '.join(list(map(str,factors)))} {' '.join(['1' for i in range(req_ones)])}"
 
 
 
-p = ans  # Replace with your value of p
-q = total_mul   # Replace with your value of q
-
-
-q_inverse = mod_inverse(q, modulus)
-M = (p * q_inverse) % modulus
-print(M)
+for _ in range(int(input())):
+    print(f"Case #{_+1}: {run()}")
