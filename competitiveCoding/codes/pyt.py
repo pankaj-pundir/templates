@@ -1,36 +1,46 @@
+def bin_search(arr,val):
+    l = 0
+    r = len(arr)-1
+    while l<=r:
+        mid = l+(r-l)//2
+        if arr[mid] == val:
+            return mid
+        elif arr[mid] < val:
+            l = mid+1
+        else:
+            r = mid -1
+
+    return max(l-1,0)
 
 def run():
+    li = []
     n = int(input())
-    arr = list(map(int,input().split()))
-    arr_ind = [(val,ind) for ind,val  in enumerate(arr)]
-    arr_ind.sort()
-    cumm = [0 for i in range(n)]
-    cumm[0] = arr_ind[0][0]
-
-    for i in range(1,n):
-        cumm[i] = cumm[i-1]+ arr_ind[i][0]
-    # print(cumm)
-    result = [0 for i in range(n)]
-
-    for i in range(n-1,-1,-1):
-        if i == n-1:
-            result[i] = i
-        else:
-            if cumm[i] >= arr_ind[i+1][0]:
-                result[i] = result[i+1]
-            else:
-                result[i] = i
-    
-    gen = [0 for i in range(n)]
-
+    pt_li = []
+    li_st = []
 
     for i in range(n):
-        gen[arr_ind[i][1]] = result[i]
-
-    print(" ".join(list(map(str,gen))))             
-
-
+        p1,p2 = map(int,input().split())
+        pt_li.append((p1,p2))
+        li.append(p2)
+        li_st.append(p1)
     
-        
+    ans = 0
+    li.sort()
+    li_st.sort()
+    print(li_st)
+    print(li)
+    for i1,i2 in pt_li:
+        p1_st = bin_search(li_st,i1)
+        p2_st = bin_search(li_st,i2) 
+
+        p1_end = bin_search(li,i1)
+        p2_end = bin_search(li,i2)
+        print(p1_st,p2_st,p1_end,p2_end)
+        ans += min((p2_st - p1_st) ,(p2_end - p1_end))
+    
+    print(ans)
+    
+       
+
 for _ in range(int(input())):
     run()
